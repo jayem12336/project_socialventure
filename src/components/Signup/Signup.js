@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         // margin: 'auto',
-        height: '700px',
+        height: '820px',
         display: 'flex',
         "@media (max-width: 600px)": {
             height: '100%'
