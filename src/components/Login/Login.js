@@ -22,6 +22,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import ForgotPassword from './ForgotPassword/ForgotPassword';
+import Footer from './../Footer/Footer'
 
 import bgImage from '../../assets/bgImage_2.png'
 
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         // margin: 'auto',
-        height: '100vh',
+        height: '700px',
         display: 'flex',
         "@media (max-width: 600px)": {
             height: '100%'
@@ -173,7 +174,7 @@ export default function Login() {
     const loginwithGoogle = (e) => {
 
         e.preventDefault();
-        
+
         const auth = firebase.auth();
 
         auth.signInWithPopup(provider)
@@ -189,15 +190,15 @@ export default function Login() {
                         lastname: lastName,
                         photourl: user.photoURL,
                         userid: user.uid,
-                        gender:"",
-                        birthday:""
+                        gender: "",
+                        birthday: ""
                     }).then(() => {
                         console.log("document successfully Written");
                     })
                     setValues({ isLoading: false });
                     history.push('/home');
                 });
-            });    
+            });
     }
 
     if (values.isLoading) {
@@ -209,131 +210,134 @@ export default function Login() {
     }
 
     return (
-        <Grid className={classes.bgStyle}>
-            <Grid container justify="center" style={{ margin: '100px auto' }}>
-                <Grid className={classes.gridContainer}>
-                    <Grid container justify="flex-start">
-                        <Grid className={classes.formContainer}>
-                            <Grid align='center'>
-                                <h2>Sign In</h2>
+        <>
+            <Grid className={classes.bgStyle}>
+                <Grid container justify="center" style={{ margin: '100px auto' }}>
+                    <Grid className={classes.gridContainer}>
+                        <Grid container justify="flex-start">
+                            <Grid className={classes.formContainer}>
+                                <Grid align='center'>
+                                    <h2>Sign In</h2>
+                                </Grid>
+                                {values.errors && (
+                                    <Alert className={classes.errorMessage} severity="error">
+                                        {values.errors}
+                                    </Alert>)}
+                                <form>
+                                    <Grid container>
+                                        <TextField
+                                            name="username"
+                                            type="name"
+                                            label="EMAIL"
+                                            placeholder="Email"
+                                            variant="outlined"
+                                            className={classes.textMargin}
+                                            autoFocus={true}
+                                            onChange={handleChange("email")}
+                                            value={values.email}
+                                            fullWidth
+                                            InputProps={{
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <MailOutlineIcon color="primary" />
+                                                    </InputAdornment>
+                                                ),
+                                                className: classes.textSize
+                                            }}
+                                            InputLabelProps={{
+                                                className: classes.labelStyle
+                                            }}
+                                        />
+                                    </Grid>
+                                    <Grid container>
+                                        <TextField
+                                            label='Password'
+                                            placeholder='Enter password'
+                                            name="password"
+                                            variant="outlined"
+                                            onChange={handleChange("password")}
+                                            value={values.password}
+                                            type={values.showPassword ? 'text' : 'password'}
+                                            className={classes.textMargin}
+                                            fullWidth
+                                            InputProps={{
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <LockOutlinedIcon color="primary" />
+                                                    </InputAdornment>
+                                                ),
+                                                endAdornment: (
+                                                    <InputAdornment position="end">
+                                                        <IconButton
+                                                            aria-label="toggle password visibility"
+                                                            onClick={handleClickShowPassword}
+                                                            onMouseDown={handleMouseDownPassword}
+                                                        >
+                                                            {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                                ),
+                                                className: classes.textSize
+                                            }}
+                                            InputLabelProps={{
+                                                className: classes.labelStyle
+                                            }}
+                                        />
+                                    </Grid>
+                                    <Grid container justify="flex-end" style={{ marginTop: 10 }} onClick={handleOpen} >
+                                        <Typography className={classes.forgotStyle}>Forgot Password?</Typography>
+                                    </Grid>
+                                    <Grid container justify="center" spacing={3}>
+                                        <Grid item xs={6}>
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                className={classes.btnStyle}
+                                                fullWidth
+                                                onClick={login}
+                                            >Login Now</Button>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                className={classes.btnStyle}
+                                                fullWidth
+                                                onClick={() => history.push('/signup')}
+                                            >Sign up</Button>
+                                        </Grid>
+                                    </Grid>
+                                    <Button
+                                        variant="contained"
+                                        size="large"
+                                        className={classes.googleBtn}
+                                        startIcon={<FcGoogle />}
+                                        fullWidth
+                                        onClick={loginwithGoogle}
+                                    >
+                                        Sign up with google
+                                    </Button>
+                                </form>
                             </Grid>
-                            {values.errors && (
-                                <Alert className={classes.errorMessage} severity="error">
-                                    {values.errors}
-                                </Alert>)}
-                            <form>
-                                <Grid container>
-                                    <TextField
-                                        name="username"
-                                        type="name"
-                                        label="EMAIL"
-                                        placeholder="Email"
-                                        variant="outlined"
-                                        className={classes.textMargin}
-                                        autoFocus={true}
-                                        onChange={handleChange("email")}
-                                        value={values.email}
-                                        fullWidth
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <MailOutlineIcon color="primary" />
-                                                </InputAdornment>
-                                            ),
-                                            className: classes.textSize
-                                        }}
-                                        InputLabelProps={{
-                                            className: classes.labelStyle
-                                        }}
-                                    />
-                                </Grid>
-                                <Grid container>
-                                    <TextField
-                                        label='Password'
-                                        placeholder='Enter password'
-                                        name="password"
-                                        variant="outlined"
-                                        onChange={handleChange("password")}
-                                        value={values.password}
-                                        type={values.showPassword ? 'text' : 'password'}
-                                        className={classes.textMargin}
-                                        fullWidth
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <LockOutlinedIcon color="primary" />
-                                                </InputAdornment>
-                                            ),
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton
-                                                        aria-label="toggle password visibility"
-                                                        onClick={handleClickShowPassword}
-                                                        onMouseDown={handleMouseDownPassword}
-                                                    >
-                                                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            ),
-                                            className: classes.textSize
-                                        }}
-                                        InputLabelProps={{
-                                            className: classes.labelStyle
-                                        }}
-                                    />
-                                </Grid>
-                                <Grid container justify="flex-end" style={{ marginTop: 10 }} onClick={handleOpen} >
-                                    <Typography className={classes.forgotStyle}>Forgot Password?</Typography>
-                                </Grid>
-                                <Grid container justify="center" spacing={3}>
-                                    <Grid item xs={6}>
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            className={classes.btnStyle}
-                                            fullWidth
-                                            onClick={login}
-                                        >Login Now</Button>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            className={classes.btnStyle}
-                                            fullWidth
-                                            onClick={() => history.push('/signup')}
-                                        >Sign up</Button>
-                                    </Grid>
-                                </Grid>
-                                <Button
-                                    variant="contained"
-                                    size="large"
-                                    className={classes.googleBtn}
-                                    startIcon={<FcGoogle />}
-                                    fullWidth
-                                    onClick={loginwithGoogle}
-                                >
-                                    Sign up with google
-                                </Button>
-                            </form>
                         </Grid>
                     </Grid>
                 </Grid>
+                <Modal
+                    className={classes.modal}
+                    open={open}
+                    onClose={handleClose}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                        timeout: 500,
+                    }}
+                >
+                    <Fade in={open}>
+                        <ForgotPassword />
+                    </Fade>
+                </Modal>
             </Grid>
-            <Modal
-                className={classes.modal}
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
-            >
-                <Fade in={open}>
-                    <ForgotPassword />
-                </Fade>
-            </Modal>
-        </Grid>
+            <Footer />
+        </>
     )
 }

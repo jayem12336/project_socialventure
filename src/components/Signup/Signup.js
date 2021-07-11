@@ -22,6 +22,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import { Alert } from "@material-ui/lab"
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Footer from './../Footer/Footer'
 
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         // margin: 'auto',
-        height: '100vh',
+        height: '700px',
         display: 'flex',
         "@media (max-width: 600px)": {
             height: '100%'
@@ -179,6 +180,7 @@ export default function Login() {
     }
 
     return (
+        <>
         <Grid className={classes.bgStyle}>
             <Grid container justify="center" className={classes.containerPosition}>
                 <Grid style={{ width: '80%' }}>
@@ -386,5 +388,7 @@ export default function Login() {
                 </Grid>
             </Grid>
         </Grid>
+        <Footer />
+        </>
     )
 }
