@@ -193,9 +193,9 @@ export default function Login() {
                         birthday:""
                     }).then(() => {
                         console.log("document successfully Written");
-                        setValues({ isLoading: false });
-                        history.push('/home');
                     })
+                    setValues({ isLoading: false });
+                    history.push('/home');
                 });
             });    
     }
