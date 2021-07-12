@@ -192,10 +192,10 @@ export default function Login() {
                         gender:"",
                         birthday:""
                     }).then(() => {
-                        console.log("document successfully Written")
+                        console.log("document successfully Written");
+                        setValues({ isLoading: false });
+                        history.push('/home');
                     })
-                    setValues({ isLoading: false });
-                    history.push('/home');
                 });
             });    
     }
