@@ -129,13 +129,12 @@ export default function Header({ userProfile }) {
         setAnchorEl(null);
     };
 
-    const notificationButton = () => 
-    {
+    const notificationButton = () => {
         Swal.fire({
             position: 'center',
             icon: 'success',
             title: 'This is only a Design! ',
-          })
+        })
     }
 
     const messageButton = () => {
@@ -143,8 +142,8 @@ export default function Header({ userProfile }) {
             position: 'center',
             icon: 'success',
             title: 'This is only a Design! ',
-          })
-        }
+        })
+    }
 
     const logout = () => {
         setAnchorEl(null);
@@ -178,8 +177,9 @@ export default function Header({ userProfile }) {
 
     return (
         <div className={classes.grow}>
-            <Grid className={classes.root}>
-                <AppBar position="fixed" style={{ borderBottom: 'none' }}>
+
+            <AppBar position="fixed" style={{ borderBottom: 'none' }}>
+                <Grid className={classes.root}>
                     <Toolbar>
                         <IconButton
                             edge="start"
@@ -264,8 +264,8 @@ export default function Header({ userProfile }) {
                         </div>
                         {isMatch ? <NestedListComponents userProfile={userProfile} /> : ""}
                     </Toolbar>
-                </AppBar>
-            </Grid>
+                </Grid>
+            </AppBar>
         </div>
     );
 }
