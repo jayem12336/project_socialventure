@@ -232,7 +232,7 @@ export default function Post({
                         <Grid item>
                             <Typography variant="subtitle1">{userName}</Typography>
                             <Grid container justify="flex-start">
-                                <Typography variant="caption">{moment(timestamp.toDate().toISOString()).calendar()}</Typography>
+                                <Typography variant="caption">{moment(timestamp.toDate().toISOString()).fromNow()}</Typography>
                             </Grid>
                         </Grid>
                     </Grid>

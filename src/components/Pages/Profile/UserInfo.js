@@ -14,6 +14,11 @@ import { DropzoneDialog } from 'material-ui-dropzone';
 import CameraIcon from '@material-ui/icons/Camera';
 import Resizer from 'react-image-file-resizer';
 import Button from '@material-ui/core/Button'
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+import ProfileModal from './EditProfileModal';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -79,6 +84,17 @@ const useStyles = makeStyles((theme) => ({
             fontSize: 12,
         },
     },
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    paper: {
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+    },
 
 }))
 
@@ -99,6 +115,16 @@ export default function UserInfo({ userProfile }) {
     const [upload, setUpload] = useState({
         open: false
     })
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(function (user) {
@@ -244,34 +270,39 @@ export default function UserInfo({ userProfile }) {
                     <Grid container justify="center">
                         <Grid container className={classes.listStyle}>
                             {values.user && values.user.birthday === "" ? <Typography variant="h5" className={classes.textStyle} >Birthday: Hello World</Typography> :
-                                <Typography variant="h5" className={classes.textStyle}>Birthday: </Typography>
+                                <Typography variant="h5" className={classes.textStyle}>Birthday: {moment(values.user && values.user.birthday && values.user.birthday.toDate().toISOString()).format('LL')} </Typography>
                             }
                         </Grid>
                     </Grid>
                     <Grid container justify="center" style={{ marginTop: 20 }} spacing={2}>
-                        <Grid item>
-                            <Grid container>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.btnStyle}
-                                >
-                                    Edit
-                                </Button>
-                            </Grid>
-                        </Grid>
-                        <Grid item>
-                            <Grid container>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.btnStyle}
-                                >
-                                    Save
-                                </Button>
-                            </Grid>
+                        <Grid container justify="center">
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                className={classes.btnStyle}
+                                onClick={handleOpen}
+                            >
+                                Edit Profile
+                            </Button>
                         </Grid>
                     </Grid>
+                    <Modal
+                        className={classes.modal}
+                        open={open}
+                        onClose={handleClose}
+                        closeAfterTransition
+                        BackdropComponent={Backdrop}
+                        BackdropProps={{
+                            timeout: 500,
+                        }}
+                    >
+                        <Fade in={open}>
+                            <ProfileModal
+                                userInfo={values.user}
+                                userId={values.userUid}
+                            />
+                        </Fade>
+                    </Modal>
                 </Grid>
             </SideBarDrawer>
         </div>

@@ -31,8 +31,8 @@ import {
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 
-import bgImage from '../../assets/bgImage_2.png'
-import Logo from '../../assets/socialventureLogo_1.png'
+import bgImage from '../../assets/images/bgImage_2.png'
+import Logo from '../../assets/images/socialventureLogo_1.png'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -149,17 +149,15 @@ export default function Login() {
                         gender: values.gender,
                         birthday: selectedDate,
                         userid: user.uid,
-                        coverurl: values.cover_url
+                        coverurl: values.cover_url,
+                        signinwithgoole: false,
                     })
                         .then(() => {
-                            console.log("Document successfully written!");
-                            setValues({ isLoading: false });
-                            history.push('/home');
-
                         })
                         .catch((error) => {
-                            console.error("Error writing document: ", error);
                         });
+                    setValues({ isLoading: false });
+                    history.push('/home');
                 })
                 .catch((error) => {
                     //var errorCode = error.code;
@@ -181,214 +179,214 @@ export default function Login() {
 
     return (
         <>
-        <Grid className={classes.bgStyle}>
-            <Grid container justify="center" className={classes.containerPosition}>
-                <Grid style={{ width: '80%' }}>
-                    <Grid container justify="flex-start">
-                        <Grid className={classes.formContainer}>
-                            <Grid align='center' style={{ marginBottom: 10, marginTop: -10 }}>
-                                <img src={Logo} alt="Logo" style={{ width: 70, height: 60 }} />
-                                <Typography variant="h5">Sign Up</Typography>
-                                <Typography variant="subtitle1">It's quick and easy.</Typography>
-                            </Grid>
-                            {values.errors && (
-                                <Alert className={classes.errorMessage} severity="error">
-                                    {values.errors}
-                                </Alert>)}
-                            <form>
-                                <Grid container justify="center" spacing={3}>
-                                    <Grid item xs={6}>
+            <Grid className={classes.bgStyle}>
+                <Grid container justify="center" className={classes.containerPosition}>
+                    <Grid style={{ width: '80%' }}>
+                        <Grid container justify="flex-start">
+                            <Grid className={classes.formContainer}>
+                                <Grid align='center' style={{ marginBottom: 10, marginTop: -10 }}>
+                                    <img src={Logo} alt="Logo" style={{ width: 70, height: 60 }} />
+                                    <Typography variant="h5">Sign Up</Typography>
+                                    <Typography variant="subtitle1">It's quick and easy.</Typography>
+                                </Grid>
+                                {values.errors && (
+                                    <Alert className={classes.errorMessage} severity="error">
+                                        {values.errors}
+                                    </Alert>)}
+                                <form>
+                                    <Grid container justify="center" spacing={3}>
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                name="firstname"
+                                                type="name"
+                                                label="First name"
+                                                placeholder="First name"
+                                                variant="outlined"
+                                                size="small"
+                                                onChange={handleChange("firstname")}
+                                                value={values.firstname}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                name="lastname"
+                                                type="name"
+                                                label="Last name"
+                                                placeholder="Last name"
+                                                variant="outlined"
+                                                size="small"
+                                                onChange={handleChange("lastname")}
+                                                value={values.lastname}
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container>
                                         <TextField
-                                            name="firstname"
+                                            name="username"
                                             type="name"
-                                            label="First name"
-                                            placeholder="First name"
+                                            label="EMAIL"
+                                            placeholder="Email"
                                             variant="outlined"
                                             size="small"
-                                            onChange={handleChange("firstname")}
-                                            value={values.firstname}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <TextField
-                                            name="lastname"
-                                            type="name"
-                                            label="Last name"
-                                            placeholder="Last name"
-                                            variant="outlined"
-                                            size="small"
-                                            onChange={handleChange("lastname")}
-                                            value={values.lastname}
-                                        />
-                                    </Grid>
-                                </Grid>
-                                <Grid container>
-                                    <TextField
-                                        name="username"
-                                        type="name"
-                                        label="EMAIL"
-                                        placeholder="Email"
-                                        variant="outlined"
-                                        size="small"
-                                        onChange={handleChange("email")}
-                                        value={values.email}
-                                        className={classes.textMargin}
-                                        autoFocus={true}
-                                        fullWidth
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <MailOutlineIcon color="primary" />
-                                                </InputAdornment>
-                                            ),
-                                            className: classes.textSize
-                                        }}
-                                        InputLabelProps={{
-                                            className: classes.labelStyle
-                                        }}
-                                    />
-                                </Grid>
-                                <Grid container>
-                                    <TextField
-                                        label='Password'
-                                        placeholder='Enter password'
-                                        name="password"
-                                        variant="outlined"
-                                        size="small"
-                                        onChange={handleChange("password")}
-                                        value={values.password}
-                                        type={values.showPassword ? 'text' : 'password'}
-                                        className={classes.textMargin}
-                                        fullWidth
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <LockOutlinedIcon color="primary" />
-                                                </InputAdornment>
-                                            ),
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton
-                                                        aria-label="toggle password visibility"
-                                                        onClick={handleClickShowPassword}
-                                                        onMouseDown={handleMouseDownPassword}
-                                                    >
-                                                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            ),
-                                            className: classes.textSize
-                                        }}
-                                        InputLabelProps={{
-                                            className: classes.labelStyle
-                                        }}
-                                    />
-                                </Grid>
-                                <Grid container>
-                                    <TextField
-                                        label='Confirm Password'
-                                        placeholder='Confirm Password'
-                                        name="confirmPassword"
-                                        variant="outlined"
-                                        size="small"
-                                        onChange={handleChange("confirmPassword")}
-                                        value={values.confirmPassword}
-                                        type={values.showPassword ? 'text' : 'password'}
-                                        className={classes.textMargin}
-                                        fullWidth
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <LockOutlinedIcon color="primary" />
-                                                </InputAdornment>
-                                            ),
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton
-                                                        aria-label="toggle password visibility"
-                                                        onClick={handleClickShowPassword}
-                                                        onMouseDown={handleMouseDownPassword}
-                                                    >
-                                                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            ),
-                                            className: classes.textSize
-                                        }}
-                                        InputLabelProps={{
-                                            className: classes.labelStyle
-                                        }}
-                                    />
-                                </Grid>
-                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                    <Grid container justify="space-around">
-                                        <KeyboardDatePicker
-                                            margin="normal"
-                                            id="date-picker-dialog"
-                                            label="Birthday"
-                                            format="MMM/dd/yyyy"
-                                            variant="dialog"
-                                            inputVariant="outlined"
-                                            size="small"
+                                            onChange={handleChange("email")}
+                                            value={values.email}
+                                            className={classes.textMargin}
+                                            autoFocus={true}
                                             fullWidth
-                                            value={selectedDate}
-                                            onChange={handleDateChange}
-                                            KeyboardButtonProps={{
-                                                'aria-label': 'change date',
+                                            InputProps={{
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <MailOutlineIcon color="primary" />
+                                                    </InputAdornment>
+                                                ),
+                                                className: classes.textSize
+                                            }}
+                                            InputLabelProps={{
+                                                className: classes.labelStyle
                                             }}
                                         />
                                     </Grid>
-                                </MuiPickersUtilsProvider>
-                                <FormControl component="fieldset">
-                                    <FormLabel component="legend">Gender</FormLabel>
-                                    <RadioGroup aria-label="gender" name="gender1" value={values.gender} onChange={handleChange('gender')}>
-                                        <Grid container justify="center" spacing={3}>
-                                            <Grid item xs={6}>
-                                                <FormControlLabel value="male" control={<Radio />} label="Male" />
-                                            </Grid>
-                                            <Grid item xs={6}>
-                                                <FormControlLabel value="female" control={<Radio />} label="Female" />
-                                            </Grid>
+                                    <Grid container>
+                                        <TextField
+                                            label='Password'
+                                            placeholder='Enter password'
+                                            name="password"
+                                            variant="outlined"
+                                            size="small"
+                                            onChange={handleChange("password")}
+                                            value={values.password}
+                                            type={values.showPassword ? 'text' : 'password'}
+                                            className={classes.textMargin}
+                                            fullWidth
+                                            InputProps={{
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <LockOutlinedIcon color="primary" />
+                                                    </InputAdornment>
+                                                ),
+                                                endAdornment: (
+                                                    <InputAdornment position="end">
+                                                        <IconButton
+                                                            aria-label="toggle password visibility"
+                                                            onClick={handleClickShowPassword}
+                                                            onMouseDown={handleMouseDownPassword}
+                                                        >
+                                                            {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                                ),
+                                                className: classes.textSize
+                                            }}
+                                            InputLabelProps={{
+                                                className: classes.labelStyle
+                                            }}
+                                        />
+                                    </Grid>
+                                    <Grid container>
+                                        <TextField
+                                            label='Confirm Password'
+                                            placeholder='Confirm Password'
+                                            name="confirmPassword"
+                                            variant="outlined"
+                                            size="small"
+                                            onChange={handleChange("confirmPassword")}
+                                            value={values.confirmPassword}
+                                            type={values.showPassword ? 'text' : 'password'}
+                                            className={classes.textMargin}
+                                            fullWidth
+                                            InputProps={{
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <LockOutlinedIcon color="primary" />
+                                                    </InputAdornment>
+                                                ),
+                                                endAdornment: (
+                                                    <InputAdornment position="end">
+                                                        <IconButton
+                                                            aria-label="toggle password visibility"
+                                                            onClick={handleClickShowPassword}
+                                                            onMouseDown={handleMouseDownPassword}
+                                                        >
+                                                            {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                                ),
+                                                className: classes.textSize
+                                            }}
+                                            InputLabelProps={{
+                                                className: classes.labelStyle
+                                            }}
+                                        />
+                                    </Grid>
+                                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                        <Grid container justify="space-around">
+                                            <KeyboardDatePicker
+                                                margin="normal"
+                                                id="date-picker-dialog"
+                                                label="Birthday"
+                                                format="MMM/dd/yyyy"
+                                                variant="dialog"
+                                                inputVariant="outlined"
+                                                size="small"
+                                                fullWidth
+                                                value={selectedDate}
+                                                onChange={handleDateChange}
+                                                KeyboardButtonProps={{
+                                                    'aria-label': 'change date',
+                                                }}
+                                            />
                                         </Grid>
-                                    </RadioGroup>
-                                </FormControl>
-                                <Grid container>
-                                    <Typography variant="caption">
-                                        By clicking Sign Up, you agree to our Terms, Data Policy and Cookies Policy.
-                                    </Typography>
-                                </Grid>
-                                <Grid container>
-                                    <Typography variant="caption">
-                                        You may recieve SMS Notifications from us and can opt out any time.
-                                    </Typography>
-                                </Grid>
-                                <Grid container justify="center">
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        className={classes.btnStyle}
-                                        fullWidth
-                                        size="small"
-                                        onClick={signup}
-                                    >Signup</Button>
-                                </Grid>
-                                <Grid container justify="center">
-                                    <Button
-                                        variant="contained"
-                                        color="inherit"
-                                        className={classes.btnStyle}
-                                        fullWidth
-                                        size="small"
-                                        onClick={() => history.push('/login')}
-                                    >Login</Button>
-                                </Grid>
-                            </form>
+                                    </MuiPickersUtilsProvider>
+                                    <FormControl component="fieldset">
+                                        <FormLabel component="legend">Gender</FormLabel>
+                                        <RadioGroup aria-label="gender" name="gender1" value={values.gender} onChange={handleChange('gender')}>
+                                            <Grid container justify="center" spacing={3}>
+                                                <Grid item xs={6}>
+                                                    <FormControlLabel value="male" control={<Radio />} label="Male" />
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <FormControlLabel value="female" control={<Radio />} label="Female" />
+                                                </Grid>
+                                            </Grid>
+                                        </RadioGroup>
+                                    </FormControl>
+                                    <Grid container>
+                                        <Typography variant="caption">
+                                            By clicking Sign Up, you agree to our Terms, Data Policy and Cookies Policy.
+                                        </Typography>
+                                    </Grid>
+                                    <Grid container>
+                                        <Typography variant="caption">
+                                            You may recieve SMS Notifications from us and can opt out any time.
+                                        </Typography>
+                                    </Grid>
+                                    <Grid container justify="center">
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            className={classes.btnStyle}
+                                            fullWidth
+                                            size="small"
+                                            onClick={signup}
+                                        >Signup</Button>
+                                    </Grid>
+                                    <Grid container justify="center">
+                                        <Button
+                                            variant="contained"
+                                            color="inherit"
+                                            className={classes.btnStyle}
+                                            fullWidth
+                                            size="small"
+                                            onClick={() => history.push('/login')}
+                                        >Back to Login</Button>
+                                    </Grid>
+                                </form>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
             </Grid>
-        </Grid>
-        <Footer />
+            <Footer />
         </>
     )
 }

@@ -138,6 +138,7 @@ export default function Home({ userProfile }) {
         else if (image === '') {
             setValues({ ...values, isLoading: true });
             db.collection("posts").add({
+                owner: values.userUid,
                 photourl: values.user.photourl,
                 timestamp: new Date(),
                 caption: caption,
@@ -172,6 +173,7 @@ export default function Home({ userProfile }) {
                         .getDownloadURL()
                         .then(url => {
                             db.collection("posts").add({
+                                owner: values.userUid,
                                 photourl: values.user.photourl,
                                 timestamp: new Date(),
                                 caption: caption,

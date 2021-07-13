@@ -14,7 +14,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Grid from '@material-ui/core/Grid';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import Logo from '../../assets/SV1.png';
+import Logo from '../../assets/images/SV1.png';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles'
 import NestedListComponents from '../Drawer/MobileViewDrawer/LeftNestedList';

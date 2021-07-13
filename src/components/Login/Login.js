@@ -24,7 +24,7 @@ import Fade from '@material-ui/core/Fade';
 import ForgotPassword from './ForgotPassword/ForgotPassword';
 import Footer from './../Footer/Footer'
 
-import bgImage from '../../assets/bgImage_2.png'
+import bgImage from '../../assets/images/bgImage_2.png'
 
 //#region //styles
 
@@ -179,7 +179,6 @@ export default function Login() {
 
         auth.signInWithPopup(provider)
             .then((userCredentials) => {
-
                 const firstName = userCredentials.additionalUserInfo.profile.given_name;
                 const lastName = userCredentials.additionalUserInfo.profile.family_name;
 
@@ -191,7 +190,8 @@ export default function Login() {
                         photourl: user.photoURL,
                         userid: user.uid,
                         gender: "",
-                        birthday: ""
+                        birthday: "",
+                        signinwithgoole: true
                     }).then(() => {
                         console.log("document successfully Written");
                     })
@@ -323,6 +323,8 @@ export default function Login() {
                     </Grid>
                 </Grid>
                 <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
                     className={classes.modal}
                     open={open}
                     onClose={handleClose}
