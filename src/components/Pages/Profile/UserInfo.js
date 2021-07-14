@@ -20,6 +20,7 @@ import Fade from '@material-ui/core/Fade';
 import ProfileModal from './EditProfileModal';
 import moment from 'moment';
 
+
 const useStyles = makeStyles((theme) => ({
     root: {
         overflow: "hidden",
@@ -228,9 +229,9 @@ export default function UserInfo({ userProfile }) {
                 : ""
             }
             <SideBarDrawer userProfile={values.user} profile={true}>
-                <Grid container justify='center' className={classes.profileBorder}>
-                    <Grid container justify="center">
-                        <Grid container justify="center" >
+                <Grid container justifyContent='center' className={classes.profileBorder}>
+                    <Grid container justifyContent="center">
+                        <Grid container justifyContent="center" >
                             <Avatar src={values.user && values.user.photourl} className={classes.avatarStyle} />
                             <IconButton className={classes.cameraStyle} onClick={handleOpenDropzone}>
                                 <CameraIcon />
@@ -245,37 +246,37 @@ export default function UserInfo({ userProfile }) {
                                 onClose={handleCloseDropzone}
                             />
                         </Grid>
-                        <Grid container justify="center" style={{ marginTop: 30 }}>
+                        <Grid container justifyContent="center" style={{ marginTop: 30 }}>
                             <Typography variant="h4" className={classes.emailtextStyle}>{values.user && values.user.firstname} {values.user && values.user.lastname}</Typography>
                         </Grid>
-                        <Grid container justify="center">
+                        <Grid container justifyContent="center">
                             <Typography variant="h5" className={classes.emailtextStyle}>{values.user && values.user.email}</Typography>
                         </Grid>
                     </Grid>
-                    <Grid container justify="center">
+                    <Grid container justifyContent="center">
                         <Grid container className={classes.listStyle}>
                             <Typography variant="h5" className={classes.textStyle}>Name: {values.user && values.user.firstname} {values.user && values.user.lastname}</Typography>
                         </Grid>
                     </Grid>
-                    <Grid container justify="center">
+                    <Grid container justifyContent="center">
                         <Grid container className={classes.listStyle}>
                             <Typography variant="h5" className={classes.textStyle}>Email: {values.user && values.user.email}</Typography>
                         </Grid>
                     </Grid>
-                    <Grid container justify="center">
+                    <Grid container justifyContent="center">
                         <Grid container className={classes.listStyle}>
                             <Typography variant="h5" className={classes.textStyle}>Gender: {values.user && values.user.gender}</Typography>
                         </Grid>
                     </Grid>
-                    <Grid container justify="center">
+                    <Grid container justifyContent="center">
                         <Grid container className={classes.listStyle}>
                             {values.user && values.user.birthday === "" ? <Typography variant="h5" className={classes.textStyle} >Birthday: Hello World</Typography> :
                                 <Typography variant="h5" className={classes.textStyle}>Birthday: {moment(values.user && values.user.birthday && values.user.birthday.toDate().toISOString()).format('LL')} </Typography>
                             }
                         </Grid>
                     </Grid>
-                    <Grid container justify="center" style={{ marginTop: 20 }} spacing={2}>
-                        <Grid container justify="center">
+                    <Grid container justifyContent="center" style={{ marginTop: 20 }} spacing={2}>
+                        <Grid container justifyContent="center">
                             <Button
                                 variant="contained"
                                 color="primary"
@@ -300,6 +301,7 @@ export default function UserInfo({ userProfile }) {
                             <ProfileModal
                                 userInfo={values.user}
                                 userId={values.userUid}
+                                setOpen={setOpen}
                             />
                         </Fade>
                     </Modal>

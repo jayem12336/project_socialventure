@@ -19,7 +19,7 @@ import Logo from '../../../assets/images/SV1.png'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             padding: 20,
         },
     },
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
         padding: 30,
         borderRadius: 25,
         width: "100%",
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             width: "80%",
         },
     },
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export default function ProfileModal({ userInfo, userId }) {
+export default function ProfileModal({ userInfo, userId, setOpen }) {
 
     const classes = useStyles();
 
@@ -57,12 +57,13 @@ export default function ProfileModal({ userInfo, userId }) {
         setValues({ ...values, [prop]: e.target.value })
     }
 
+
     useEffect(() => {
 
     }, [userId])
 
     // The first commit of Material-UI
-    const [selectedDate, setSelectedDate] = React.useState(userInfo.birthday.toDate().toISOString());
+    const [selectedDate, setSelectedDate] = useState(userInfo.birthday.toDate().toISOString());
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
@@ -98,6 +99,7 @@ export default function ProfileModal({ userInfo, userId }) {
             })
         }
         setValues({ ...values, isLoading: false });
+        setOpen(false);
     }
 
     if (values.isLoading) {
@@ -121,10 +123,10 @@ export default function ProfileModal({ userInfo, userId }) {
     return (
         <div className={classes.root}>
             <Grid className={classes.forgotContainer}>
-                <Grid container justify="center" style={{ marginBottom: 20, marginTop: 20 }}>
+                <Grid container justifyContent="center" style={{ marginBottom: 20, marginTop: 20 }}>
                     <img src={Logo} alt="Logo" style={{ width: 70, height: 60 }} />
                 </Grid>
-                <Grid container justify="center" style={{ marginBottom: 20, marginTop: 20 }}>
+                <Grid container justifyContent="center" style={{ marginBottom: 20, marginTop: 20 }}>
                     <Typography variant="h5">Edit Profile</Typography>
                 </Grid>
                 <Grid container className={classes.margin}>
@@ -145,37 +147,42 @@ export default function ProfileModal({ userInfo, userId }) {
                         fullWidth
                     />
                 </Grid>
-                <Grid container className={classes.margin}>
-                    <TextField
-                        variant="outlined"
-                        label="Enter New Email Address"
-                        onChange={handleChange("email")}
-                        value={values.email}
-                        fullWidth
-                    />
-                </Grid>
-                <Grid container className={classes.margin}>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <Grid container justify="center">
-                            <KeyboardDatePicker
-                                margin="normal"
-                                id="date-picker-dialog"
-                                label="Birthday"
-                                format="MMM/dd/yyyy"
-                                variant="dialog"
-                                inputVariant="outlined"
-                                size="small"
-                                fullWidth
-                                value={selectedDate}
-                                onChange={handleDateChange}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                }}
-                            />
-                        </Grid>
-                    </MuiPickersUtilsProvider>
-                </Grid>
+                {userInfo && userInfo.signinwithgoogle === false ? "" :
+                    <Grid container className={classes.margin}>
+                        <TextField
+                            variant="outlined"
+                            label="Enter New Email Address"
+                            onChange={handleChange("email")}
+                            value={values.email}
+                            fullWidth
+                        />
+                    </Grid>
+                }
 
+                {userInfo && userInfo.signinwithgoogle === false ? "" :
+
+                    <Grid container className={classes.margin}>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <Grid container justifyContent="center">
+                                <KeyboardDatePicker
+                                    margin="normal"
+                                    id="date-picker-dialog"
+                                    label="Birthday"
+                                    format="MMM/dd/yyyy"
+                                    variant="dialog"
+                                    inputVariant="outlined"
+                                    size="small"
+                                    fullWidth
+                                    value={selectedDate}
+                                    onChange={handleDateChange}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }}
+                                />
+                            </Grid>
+                        </MuiPickersUtilsProvider>
+                    </Grid>
+                }
                 <Grid container className={classes.btnContainer}>
                     <Button
                         variant="contained"

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
-import firebase, { db, provider } from '../../utils/firebase'
+import firebase, { db, provider, auth } from '../../utils/firebase'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -23,7 +23,6 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import ForgotPassword from './ForgotPassword/ForgotPassword';
 import Footer from './../Footer/Footer'
-
 import bgImage from '../../assets/images/bgImage_2.png'
 
 //#region //styles
@@ -46,13 +45,13 @@ const useStyles = makeStyles((theme) => ({
         // margin: 'auto',
         height: '820px',
         display: 'flex',
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             height: '100%'
         },
     },
     gridContainer: {
         width: '75%',
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             width: '95%',
         },
     },
@@ -71,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 20,
         borderRadius: 15,
         padding: 10,
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             fontSize: 10
         },
     },
@@ -79,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 25,
         fontSize: 15,
         borderRadius: 15,
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             fontSize: 12
         },
     },
@@ -121,9 +120,10 @@ export default function Login() {
         showPassword: false,
         errors: "",
         isLoading: false,
+        selectedDate: new Date('2014-08-18T21:11:54')
     })
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
         setOpen(true);
@@ -175,12 +175,11 @@ export default function Login() {
 
         e.preventDefault();
 
-        const auth = firebase.auth();
-
         auth.signInWithPopup(provider)
             .then((userCredentials) => {
                 const firstName = userCredentials.additionalUserInfo.profile.given_name;
                 const lastName = userCredentials.additionalUserInfo.profile.family_name;
+
 
                 firebase.auth().onAuthStateChanged(function (user) {
                     db.collection("users").doc(user.uid).set({
@@ -190,7 +189,7 @@ export default function Login() {
                         photourl: user.photoURL,
                         userid: user.uid,
                         gender: "",
-                        birthday: "",
+                        birthday: values.selectedDate,
                         signinwithgoole: true
                     }).then(() => {
                         console.log("document successfully Written");
@@ -212,9 +211,9 @@ export default function Login() {
     return (
         <>
             <Grid className={classes.bgStyle}>
-                <Grid container justify="center" style={{ margin: '100px auto' }}>
+                <Grid container justifyContent="center" style={{ margin: '100px auto' }}>
                     <Grid className={classes.gridContainer}>
-                        <Grid container justify="flex-start">
+                        <Grid container justifyContent="flex-start">
                             <Grid className={classes.formContainer}>
                                 <Grid align='center'>
                                     <h2>Sign In</h2>
@@ -284,10 +283,10 @@ export default function Login() {
                                             }}
                                         />
                                     </Grid>
-                                    <Grid container justify="flex-end" style={{ marginTop: 10 }} onClick={handleOpen} >
+                                    <Grid container justifyContent="flex-end" style={{ marginTop: 10 }} onClick={handleOpen} >
                                         <Typography className={classes.forgotStyle}>Forgot Password?</Typography>
                                     </Grid>
-                                    <Grid container justify="center" spacing={3}>
+                                    <Grid container justifyContent="center" spacing={3}>
                                         <Grid item xs={6}>
                                             <Button
                                                 variant="contained"
@@ -338,6 +337,7 @@ export default function Login() {
                         <ForgotPassword />
                     </Fade>
                 </Modal>
+
             </Grid>
             <Footer />
         </>

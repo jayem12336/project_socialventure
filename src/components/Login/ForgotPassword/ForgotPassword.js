@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
         padding: 30,
         borderRadius: 25,
         width: "100%",
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             width: "80%",
         },
     },
@@ -67,10 +67,10 @@ export default function ForgotPassword() {
     return (
         <div className={classes.root}>
             <Grid className={classes.forgotContainer}>
-                <Grid container justify="center" style={{ marginBottom: 20, marginTop: 20 }}>
+                <Grid container justifyContent="center" style={{ marginBottom: 20, marginTop: 20 }}>
                     <Typography variant="h6">Forgot Password</Typography>
                 </Grid>
-                <Grid container justify="center" style={{ marginBottom: 10, marginTop: 20 }}>
+                <Grid container justifyContent="center" style={{ marginBottom: 10, marginTop: 20 }}>
                     <Typography>Enter your email to recover your account</Typography>
                 </Grid>
                 <Grid container>

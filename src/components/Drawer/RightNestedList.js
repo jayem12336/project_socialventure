@@ -73,7 +73,7 @@ export default function RightNestedList() {
             <Typography variant="h6" style={{ marginTop: 10, fontWeight:"bold" }}>Jomari Aquino</Typography>
             <Typography variant="subtitle1">Wants to add you to friends</Typography>
           </Grid>
-          <Grid container justify="center" spacing={3}>
+          <Grid container justifyContent="center" spacing={3}>
             <Grid item>
               <Button
                 variant="contained"
@@ -104,7 +104,7 @@ export default function RightNestedList() {
             <Typography variant="h6" style={{ marginTop: 10, fontWeight:"bold" }}>Jarvis Mariano</Typography>
             <Typography variant="subtitle1">Wants to add you to friends</Typography>
           </Grid>
-          <Grid container justify="center" spacing={3}>
+          <Grid container justifyContent="center" spacing={3}>
             <Grid item>
               <Button
                 variant="contained"
@@ -126,7 +126,7 @@ export default function RightNestedList() {
           </Grid>
         </Grid>
       </ListItem>
-      <Grid container justify="center">
+      <Grid container justifyContent="center">
         <Button>
           See All
         </Button>
@@ -155,7 +155,7 @@ export default function RightNestedList() {
         <Typography variant="subtitle1" className={classes.textStyle}>
           JM
         </Typography>
-        <Grid container justify="flex-end">
+        <Grid container justifyContent="flex-end">
           <IconButton>
             <MoreVertIcon />
           </IconButton>
@@ -168,7 +168,7 @@ export default function RightNestedList() {
         <Typography variant="subtitle1" className={classes.textStyle}>
           Jarvis
         </Typography>
-        <Grid container justify="flex-end">
+        <Grid container justifyContent="flex-end">
           <IconButton>
             <MoreVertIcon />
           </IconButton>

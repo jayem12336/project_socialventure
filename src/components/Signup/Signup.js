@@ -180,9 +180,9 @@ export default function Login() {
     return (
         <>
             <Grid className={classes.bgStyle}>
-                <Grid container justify="center" className={classes.containerPosition}>
+                <Grid container justifyContent="center" className={classes.containerPosition}>
                     <Grid style={{ width: '80%' }}>
-                        <Grid container justify="flex-start">
+                        <Grid container justifyContent="flex-start">
                             <Grid className={classes.formContainer}>
                                 <Grid align='center' style={{ marginBottom: 10, marginTop: -10 }}>
                                     <img src={Logo} alt="Logo" style={{ width: 70, height: 60 }} />
@@ -194,7 +194,7 @@ export default function Login() {
                                         {values.errors}
                                     </Alert>)}
                                 <form>
-                                    <Grid container justify="center" spacing={3}>
+                                    <Grid container justifyContent="center" spacing={3}>
                                         <Grid item xs={6}>
                                             <TextField
                                                 name="firstname"
@@ -319,7 +319,7 @@ export default function Login() {
                                         />
                                     </Grid>
                                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                        <Grid container justify="space-around">
+                                        <Grid container justifyContent="space-around">
                                             <KeyboardDatePicker
                                                 margin="normal"
                                                 id="date-picker-dialog"
@@ -340,7 +340,7 @@ export default function Login() {
                                     <FormControl component="fieldset">
                                         <FormLabel component="legend">Gender</FormLabel>
                                         <RadioGroup aria-label="gender" name="gender1" value={values.gender} onChange={handleChange('gender')}>
-                                            <Grid container justify="center" spacing={3}>
+                                            <Grid container justifyContent="center" spacing={3}>
                                                 <Grid item xs={6}>
                                                     <FormControlLabel value="male" control={<Radio />} label="Male" />
                                                 </Grid>
@@ -360,7 +360,7 @@ export default function Login() {
                                             You may recieve SMS Notifications from us and can opt out any time.
                                         </Typography>
                                     </Grid>
-                                    <Grid container justify="center">
+                                    <Grid container justifyContent="center">
                                         <Button
                                             variant="contained"
                                             color="primary"
@@ -370,7 +370,7 @@ export default function Login() {
                                             onClick={signup}
                                         >Signup</Button>
                                     </Grid>
-                                    <Grid container justify="center">
+                                    <Grid container justifyContent="center">
                                         <Button
                                             variant="contained"
                                             color="inherit"

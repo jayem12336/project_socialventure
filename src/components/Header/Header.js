@@ -194,7 +194,7 @@ export default function Header({ userProfile }) {
                         <Typography className={classes.title} variant="h6" noWrap>
                             Social Venture
                         </Typography>
-                        <Grid container justify="center" style={{ width: '80%' }}>
+                        <Grid container justifyContent="center" style={{ width: '80%' }}>
                             <div className={classes.search}>
                                 <div className={classes.searchIcon}>
                                     <SearchIcon />

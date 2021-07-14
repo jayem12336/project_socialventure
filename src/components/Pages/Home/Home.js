@@ -19,6 +19,7 @@ import MobileViewHeader from '../../Header/MobileViewHeader/MobileViewHeader'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles'
 
+
 import Swal from 'sweetalert2'
 
 const useStyles = makeStyles((theme) => ({
@@ -58,11 +59,10 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             background: '#4877c2',
         },
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             marginLeft: 90,
             marginTop: 10,
         },
-
     }
 }))
 export default function Home({ userProfile }) {
@@ -229,7 +229,7 @@ export default function Home({ userProfile }) {
             <SideBarDrawer userProfile={values.user}>
                 <Grid container className={classes.postContainer} >
                     <Grid item sm={10}>
-                        <Grid container justify="flex-start">
+                        <Grid container justifyContent="flex-start">
                             <TextField
                                 fullWidth
                                 variant="outlined"
@@ -248,7 +248,7 @@ export default function Home({ userProfile }) {
                         </Grid>
                     </Grid>
                     <Grid item sm={2}>
-                        <Grid container justify="flex-end" >
+                        <Grid container justifyContent="flex-end" >
                             <Button
                                 variant="contained"
                                 color="primary"
@@ -283,7 +283,7 @@ export default function Home({ userProfile }) {
                                 <Typography>News Feed</Typography>
                             </Grid>
                         </Grid>
-                        <Grid container justify="center">
+                        <Grid container justifyContent="center">
                             {image === "" ? "" :
                                 <Typography variant="subtitle1" className={`imageText ${image && 'show'}`}>Image is added and will be displayed after clicking the Post button</Typography>
                             }
@@ -297,13 +297,14 @@ export default function Home({ userProfile }) {
                             key={id}
                             postId={id}
                             userName={post.firstname}
-                            userId={values.user && values.user.userUid}
+                            userId={values.userUid}
                             userProfile={values.user}
                             timestamp={post.timestamp}
                             caption={post.caption}
                             imageUrl={post.imageUrl}
                             noLikes={post.noLikes}
                             photourl={post.photourl}
+                            owner={post.owner}
                         />
                     ))
                 }

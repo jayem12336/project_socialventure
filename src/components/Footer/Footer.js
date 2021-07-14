@@ -13,8 +13,8 @@ import {
 
 const Footer = () =>
     <>
-        <Grid container justify="center" style={{backgroundColor: 'white', padding: '50px', minHeight: "212px"}}>
-            <Grid container item sm={6} xs={11} justify="space-between" style={{maxWidth: '1200px'}}>
+        <Grid container justifyContent="center" style={{backgroundColor: 'white', padding: '50px', minHeight: "212px"}}>
+            <Grid container item sm={6} xs={11} justifyContent="space-between" style={{maxWidth: '1200px'}}>
                 <Grid item sm={5} xs={12}>
                     <Security color="inherit" />
                     <Typography paragraph>

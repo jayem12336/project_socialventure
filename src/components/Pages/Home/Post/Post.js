@@ -14,6 +14,9 @@ import ChatIcon from '@material-ui/icons/Chat';
 import TextField from '@material-ui/core/TextField'
 import Divider from '@material-ui/core/Divider';
 import { InputAdornment } from '@material-ui/core';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Swal from 'sweetalert2'
 
 const useStyles = makeStyles((theme) => ({
     postContainer: {
@@ -26,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             background: '#4877c2',
         },
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             width: 120,
         },
     },
@@ -39,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
         padding: 10,
         width: "100%",
         borderRadius: 10,
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             padding: 10,
             borderRadius: 10,
             width: "100%",
@@ -48,44 +51,44 @@ const useStyles = makeStyles((theme) => ({
     like: {
         marginTop: 10,
         display: "flex",
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             paddingLeft: 0
         },
     },
     commentContainer: {
         width: "100%",
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             width: "100%",
         },
     },
     commentNameStyle: {
         color: "blue",
         paddingTop: 10,
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             paddingTop: 5,
         },
     },
     commentTextStyle: {
         paddingTop: 10,
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             paddingTop: 5,
         },
     },
     commentAvatar: {
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             width: 30,
             height: 30
         },
     },
     deleteContainer: {
         marginTop: -70,
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             marginTop: -60,
             marginLeft: '0px auto'
         },
     },
     commentStyle: {
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             marginLeft: 50
         },
     }
@@ -100,7 +103,8 @@ export default function Post({
     noLikes,
     timestamp,
     userProfile,
-    photourl
+    photourl,
+    owner
 }) {
 
     const classes = useStyles();
@@ -114,7 +118,17 @@ export default function Post({
     const [show, setShow] = useState('like2');
     const [show2, setShow2] = useState('textforlike');
     const [open, setOpen] = useState(false);
-    const [totalDoclNumbers, setTotalDoclNumbers] = useState(0)
+    const [totalDoclNumbers, setTotalDoclNumbers] = useState(0);
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     useEffect(() => {
         let unsubscribe;
@@ -221,6 +235,19 @@ export default function Post({
         setOpen(!open);
     }
 
+    const deletePost = () => {
+        if (owner === userId) {
+            db.collection('posts').doc(postId).delete();
+        }
+        else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'You can only delete your own post!',
+            })
+        }
+    }
+
     return (
         <Grid>
             <Grid container className={classes.postContainer}>
@@ -231,27 +258,37 @@ export default function Post({
                         </Grid>
                         <Grid item>
                             <Typography variant="subtitle1">{userName}</Typography>
-                            <Grid container justify="flex-start">
+                            <Grid container justifyContent="flex-start">
                                 <Typography variant="caption">{moment(timestamp.toDate().toISOString()).fromNow()}</Typography>
                             </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
                 <Grid container className={classes.deleteContainer}>
-                    <Grid container justify="flex-end">
+                    <Grid container justifyContent="flex-end">
                         <Grid item>
-                            <IconButton>
+                            <IconButton onClick={handleClick}>
                                 <MoreHorizIcon />
                             </IconButton>
+                            <Menu
+                                id="simple-menu"
+                                anchorEl={anchorEl}
+                                keepMounted
+                                open={Boolean(anchorEl)}
+                                onClose={handleClose}
+                                style={{ marginTop: 40 }}
+                            >
+                                <MenuItem onClick={deletePost}>Delete</MenuItem>
+                            </Menu>
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid container justify="flex-start" style={{ margin: 20 }}>
+                <Grid container justifyContent="flex-start" style={{ margin: 20 }}>
                     {caption}
                 </Grid >
                 {
                     imageUrl === "" ? "" :
-                        <Grid container justify="center" >
+                        <Grid container justifyContent="center" >
                             <img src={imageUrl} alt="" style={{ width: isMatch ? "100%" : "100%", height: "100%" }} />
                         </Grid>
                 }
@@ -271,7 +308,7 @@ export default function Post({
                         </Grid>
                     </Grid>
                     <Grid item sm={10}>
-                        <Grid container justify="flex-end" className={classes.commentStyle}>
+                        <Grid container justifyContent="flex-end" className={classes.commentStyle}>
                             <Grid item>
                                 <Button onClick={handleOpen}>{totalDoclNumbers} Comment</Button>
                             </Grid>
@@ -279,7 +316,7 @@ export default function Post({
                     </Grid>
                 </Grid>
 
-                <Grid container justify="center" spacing={3} style={{ marginTop: 10 }}>
+                <Grid container justifyContent="center" spacing={3} style={{ marginTop: 10 }}>
                     <Divider variant="middle" color="primary" style={{ width: "100%", background: 'pink' }} />
                     <Grid item onClick={likeHandle}>
                         <Button
@@ -332,7 +369,7 @@ export default function Post({
                 {open ? <Grid container>
                     {
                         comments.map(({ id, comment }) => (
-                            <Grid container justify="flex-start" style={{ marginTop: 10 }} key={id}>
+                            <Grid container justifyContent="flex-start" style={{ marginTop: 10 }} key={id}>
                                 <Grid container className={classes.container_comments}>
                                     <Grid container spacing={1}>
                                         <Grid item>

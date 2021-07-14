@@ -98,20 +98,20 @@ export default function Photos() {
                     docs.map(({ id, image }) => (
                         <Grid container key={id}>
                             {image.imageUrl === "" ? "" :
-                                <Grid container justify='center' className={classes.profileBorder} >
+                                <Grid container justifyContent='center' className={classes.profileBorder} >
                                     <>
-                                        <Grid container justify="flex-start">
+                                        <Grid container justifyContent="flex-start">
                                             <Typography variant="h5">
                                                 {image.firstname}{image.lastname}
                                             </Typography>
 
                                         </Grid>
-                                        <Grid container justify="flex-start">
+                                        <Grid container justifyContent="flex-start">
                                             <Typography variant="caption">
                                                 {moment(image.timestamp.toDate().toISOString()).calendar()}
                                             </Typography>
                                         </Grid>
-                                        <Grid container justify="center">
+                                        <Grid container justifyContent="center">
                                             <img src={image.imageUrl} alt="" style={{ height: '100%', width: '100%' }} />
                                         </Grid>
                                     </>

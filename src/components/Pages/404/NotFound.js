@@ -36,10 +36,10 @@ export default function NotFound() {
 
     return (
         <div className={classes.root}>
-            <Grid container justify="center">
+            <Grid container justifyContent="center">
                 <Typography className={classes.errorMessage}>404 Not Found</Typography>
             </Grid>
-            <Grid container justify="center">
+            <Grid container justifyContent="center">
                 <Button
                     variant="contained"
                     color="primary"

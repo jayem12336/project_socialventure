@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     coverPhotoStyle: {
         height: 400,
         width: '95%',
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             height: 200,
         },
     },
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             background: '#4877c2',
         },
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             marginLeft: 100,
             marginTop: 10,
         },
@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
     },
     coverBtn: {
         marginRight: 50,
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             marginRight: 20,
             fontSize: 5
         },
@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
         height: 400,
         width: '100%',
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             height: 200,
         },
     },
@@ -155,7 +155,7 @@ export default function Profile({ userProfile }) {
                     post: doc.data(),
                 })));
             })
-        return () => {
+        return () => {  
             setPosts([]);
         };
     }, [values.userUid]);
@@ -382,14 +382,14 @@ return (
             : ""
         }
         <SideBarDrawer userProfile={values.user} profile={true}>
-            <Grid container justify='center' className={classes.profileBorder}>
+            <Grid container justifyContent='center' className={classes.profileBorder}>
                 <Grid container className={classes.coverPhotoStyle} >
                     {values.user === "" ? "" :
                         <img src={values.user && values.user.coverurl} className={classes.coverStyle} alt="" />
                     }
                 </Grid>
-                <Grid container justify="center" style={{ marginTop: -70 }}>
-                    <Grid container justify="flex-end" className={classes.coverBtn}>
+                <Grid container justifyContent="center" style={{ marginTop: -70 }}>
+                    <Grid container justifyContent="flex-end" className={classes.coverBtn}>
                         {isMatch ?
 
                             <IconButton className={classes.coverIconBtn} onClick={coverOpenDropzone}>
@@ -417,7 +417,7 @@ return (
                         />
                     </Grid>
 
-                    <Grid container justify="center" >
+                    <Grid container justifyContent="center" >
                         <Avatar src={values.user && values.user.photourl} style={{ width: 100, height: 100, marginLeft: 50, marginTop: 10 }} />
                         <IconButton className={classes.cameraStyle} onClick={handleOpenDropzone}>
                             <CameraIcon />
@@ -432,17 +432,17 @@ return (
                             onClose={handleCloseDropzone}
                         />
                     </Grid>
-                    <Grid container justify="center">
+                    <Grid container justifyContent="center">
                         <Typography variant="h6">{values.user && values.user.firstname} {values.user && values.user.lastname}</Typography>
                     </Grid>
-                    <Grid container justify="center">
+                    <Grid container justifyContent="center">
                         <Typography>{values.user && values.user.email}</Typography>
                     </Grid>
                 </Grid>
             </Grid>
             <Grid container className={classes.postContainer} >
                 <Grid item sm={10}>
-                    <Grid container justify="flex-start">
+                    <Grid container justifyContent="flex-start">
                         <TextField
                             fullWidth
                             variant="outlined"
@@ -461,7 +461,7 @@ return (
                     </Grid>
                 </Grid>
                 <Grid item sm={2}>
-                    <Grid container justify="flex-end" >
+                    <Grid container justifyContent="flex-end" >
                         <Button
                             variant="contained"
                             color="primary"
@@ -496,7 +496,7 @@ return (
                             <Typography>News Feed</Typography>
                         </Grid>
                     </Grid>
-                    <Grid container justify="center">
+                    <Grid container justifyContent="center">
                         {image === "" ? "" :
                             <Typography variant="subtitle1" className={`imageText ${image && 'show'}`}>Image is added and will be displayed after clicking the Post button</Typography>
                         }

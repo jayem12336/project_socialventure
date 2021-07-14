@@ -60,7 +60,7 @@ export default function MobileViewHeader() {
             {isMatch ? (
                 <AppBar position="fixed" style={{ marginTop: 73 }}>
                     <Toolbar variant="dense">
-                        <Grid container justify="space-between">
+                        <Grid container justifyContent="space-between">
                             <IconButton
                                 edge="start"
                                 className={classes.menuButton}

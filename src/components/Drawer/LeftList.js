@@ -81,14 +81,14 @@ export default function NestedList({ userProfile }) {
     >
       <ListItem style={{ marginBottom: 30, marginTop: 20 }}>
         <Grid container spacing={2} className={classes.userDetailsContainer}>
-          <Grid container justify="center">
+          <Grid container justifyContent="center">
             <Avatar src={userProfile && userProfile.photourl} style={{ width: 50, height: 50, marginTop: 10 }} />
           </Grid>
-          <Grid container justify="center">
+          <Grid container justifyContent="center">
             <Link to="/profile" className={classes.linkStyle}>
               <Typography variant="h6" style={{ textAlign: 'center', marginTop: 10 }}>{userProfile && userProfile.firstname} {userProfile && userProfile.lastname}</Typography>
             </Link>
-            <Grid container justify="center">
+            <Grid container justifyContent="center">
               <Typography>{userProfile && userProfile.email}</Typography>
             </Grid>
           </Grid>
