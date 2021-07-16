@@ -179,7 +179,8 @@ export default function Profile() {
                 imageUrl: image,
                 noLikes: "",
                 firstname: values.user.firstname,
-                lastname: values.user.lastname
+                lastname: values.user.lastname,
+                imageid: ""
             })
             setValues({ ...values, isLoading: false });
             setCaption("");
@@ -214,7 +215,8 @@ export default function Profile() {
                                 imageUrl: url,
                                 noLikes: "",
                                 firstname: values.user.firstname,
-                                lastname: values.user.lastname
+                                lastname: values.user.lastname,
+                                imageid: id
                             })
                             setValues({ ...values, progress: 0, isLoading: false })
                             setCaption("");
@@ -516,6 +518,7 @@ export default function Profile() {
                             imageUrl={post.imageUrl}
                             noLikes={post.noLikes}
                             photourl={post.photourl}
+                            imageid={post.imageid}
                         />
                     ))
                 }

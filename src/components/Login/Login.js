@@ -186,23 +186,22 @@ export default function Login() {
                 // This gives you a Google Access Token. You can use it to access the Google API.
                 // The signed-in user info.
                 // ...
-
-                const currentUser = auth.currentUser;
-                db.collection("users").doc(currentUser.uid).set(
+                var user = result.user;
+                db.collection("users").doc(user.uid).set(
                     {
-                        email: currentUser.email,
+                        email: user.email,
                         firstname: firstName,
                         lastname: lastName,
-                        photourl: currentUser.photoURL,
-                        userid: currentUser.uid,
+                        photourl: user.photoURL,
+                        userid: user.uid,
                         gender: "",
                         birthday: values.selectedDate,
                         signinwithgoogle: "true"
                     }).then(() => {
-                        console.log("document successfully Written");
+                        console.log("document successfully Written"); 
+                        setValues({ isLoading: false });           
+                        history.push('/home');
                     })
-                setValues({ isLoading: false });
-                history.push('/home');
             }).catch((error) => {
 
             });
