@@ -266,7 +266,6 @@ export default function Profile() {
                         (snapshot) => {
                             // Observe state change events such as progress, pause, and resume
                             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                         },
                         (error) => {
                             // Handle unsuccessful uploads
@@ -334,7 +333,6 @@ export default function Profile() {
                         (snapshot) => {
                             // Observe state change events such as progress, pause, and resume
                             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                         },
                         (error) => {
                             // Handle unsuccessful uploads
