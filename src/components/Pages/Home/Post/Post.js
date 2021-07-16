@@ -237,7 +237,9 @@ export default function Post({
     }
 
     const deletePost = () => {
+        setAnchorEl(null)
         if (owner === userId) {
+            
             if (imageUrl !== "") {
                 // Create a reference to the file to delete
                 const desertRef = storage.ref(`images/${imageid}`);

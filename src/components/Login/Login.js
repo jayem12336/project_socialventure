@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
-import firebase, { db, provider } from '../../utils/firebase'
+import firebase, { auth, db, provider } from '../../utils/firebase'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -177,7 +177,7 @@ export default function Login() {
         e.preventDefault();
 
 
-        firebase.auth()
+            auth
             .signInWithPopup(provider)
             .then((result) => {
 
@@ -187,25 +187,22 @@ export default function Login() {
                 // The signed-in user info.
                 // ...
 
-                firebase.auth().onAuthStateChanged(function (user) {
-                    if (user) {
-                        db.collection("users").doc(user.uid).set(
-                            {
-                                email: user.email,
-                                firstname: firstName,
-                                lastname: lastName,
-                                photourl: user.photoURL,
-                                userid: user.uid,
-                                gender: "",
-                                birthday: values.selectedDate,
-                                signinwithgoogle: "true"
-                            }).then(() => {
-                                console.log("document successfully Written");
-                            })
-                    }
+                const currentUser = auth.currentUser;
+                    db.collection("users").doc(currentUser.uid).set(
+                        {
+                            email: currentUser.email,
+                            firstname: firstName,
+                            lastname: lastName,
+                            photourl: currentUser.photoURL,
+                            userid: currentUser.uid,
+                            gender: "",
+                            birthday: values.selectedDate,
+                            signinwithgoogle: "true"
+                        }).then(() => {
+                            console.log("document successfully Written");
+                        })
                     setValues({ isLoading: false });
                     history.push('/home');
-                });
             }).catch((error) => {
 
             });

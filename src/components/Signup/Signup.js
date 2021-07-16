@@ -150,7 +150,7 @@ export default function Login() {
                         birthday: selectedDate,
                         userid: user.uid,
                         coverurl: values.cover_url,
-                        signinwithgoole: false,
+                        signinwithgoole: "false",
                     })
                         .then(() => {
                         })
