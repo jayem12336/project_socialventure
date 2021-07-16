@@ -38,13 +38,12 @@ export default function MobileViewHeader() {
 
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const notificationButton = () => 
-    {
+    const notificationButton = () => {
         Swal.fire({
             position: 'center',
             icon: 'success',
             title: 'This is only a Design! ',
-          })
+        })
     }
 
     const messageButton = () => {
@@ -52,8 +51,8 @@ export default function MobileViewHeader() {
             position: 'center',
             icon: 'success',
             title: 'This is only a Design! ',
-          })
-        }
+        })
+    }
 
     return (
         <div className={classes.root}>

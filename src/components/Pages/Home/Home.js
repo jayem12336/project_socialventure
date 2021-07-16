@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import firebase,{ db, storage } from '../../../utils/firebase'
+import firebase, { db, storage } from '../../../utils/firebase'
 import Button from '@material-ui/core/Button'
 import Header from '../../Header/Header'
 import { makeStyles } from '@material-ui/core/styles'
@@ -83,11 +83,11 @@ export default function Home({ userProfile }) {
         isLoading: false,
         noLikes: 0,
         progress: '',
-        user:{},
-        useruid:""
+        user: {},
+        useruid: ""
     });
 
-    
+
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(function (user) {
@@ -148,7 +148,7 @@ export default function Home({ userProfile }) {
                 noLikes: "",
                 firstname: values.user.firstname,
                 lastname: values.user.lastname,
-                imageid:""
+                imageid: ""
             })
             setValues({ ...values, isLoading: false });
             setCaption("");
@@ -184,7 +184,7 @@ export default function Home({ userProfile }) {
                                 noLikes: "",
                                 firstname: values.user.firstname,
                                 lastname: values.user.lastname,
-                                imageid:id
+                                imageid: id
                             })
                             setValues({ ...values, progress: 0, isLoading: false })
                             setCaption("");

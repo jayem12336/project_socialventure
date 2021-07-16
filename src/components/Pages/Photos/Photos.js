@@ -7,7 +7,7 @@ import MobileViewHeader from '../../Header/MobileViewHeader/MobileViewHeader'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles'
 import Header from '../../Header/Header'
-import firebase,{ db } from '../../../utils/firebase'
+import firebase, { db } from '../../../utils/firebase'
 import moment from 'moment'
 
 const useStyles = makeStyles((theme) => ({
@@ -49,8 +49,8 @@ export default function Photos() {
 
     const [values, setValues] = useState({
         isLoading: false,
-        user:{},
-        useruid:""
+        user: {},
+        useruid: ""
     });
 
     useEffect(() => {

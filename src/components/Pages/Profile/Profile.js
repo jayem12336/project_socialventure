@@ -155,371 +155,371 @@ export default function Profile() {
                     post: doc.data(),
                 })));
             })
-        return () => {  
+        return () => {
             setPosts([]);
         };
     }, [values.userUid]);
 
-//#region //PostBtn
+    //#region //PostBtn
 
-const handleUpload = (event) => {
-    event.preventDefault()
-    const id = uuidV4();
-    if (!caption && image === '') {
-        alert("please fill up the following fields")
-        setValues({ ...values, isLoading: false });
-    }
-    else if (image === '') {
-        setValues({ ...values, isLoading: true });
-        db.collection("posts").add({
-            owner: values.userUid,
-            photourl: values.user.photourl,
-            timestamp: new Date(),
-            caption: caption,
-            imageUrl: image,
-            noLikes: "",
-            firstname: values.user.firstname,
-            lastname: values.user.lastname
-        })
-        setValues({ ...values, isLoading: false });
-        setCaption("");
-
-    } else {
-        const uploadTask = storage.ref(`images/${id}`).put(image);
-        uploadTask.on(
-            "state_changed",
-            (snapshot) => {
-                const progress = Math.round(
-                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-
-                );
-                setValues({ ...values, progress: progress });
-            },
-            (error) => {
-                console.log(error);
-                alert(error.message);
-            },
-            () => {
-                setValues({ ...values, isLoading: true });
-                storage
-                    .ref("images")
-                    .child(id)
-                    .getDownloadURL()
-                    .then(url => {
-                        db.collection("posts").add({
-                            owner: values.userUid,
-                            photourl: values.user.photourl,
-                            timestamp: new Date(),
-                            caption: caption,
-                            imageUrl: url,
-                            noLikes: "",
-                            firstname: values.user.firstname,
-                            lastname: values.user.lastname
-                        })
-                        setValues({ ...values, progress: 0, isLoading: false })
-                        setCaption("");
-                        setImage('');
-                    })
-            }
-        )
-    }
-}
-
-//#endregion
-
-const handleChange = (e) => {
-    if (e.target.files[0]) {
-        setImage(e.target.files[0])
-    }
-}
-const handleOpenDropzone = () => {
-    setUpload({ ...upload, open: true })
-}
-
-const handleCloseDropzone = () => {
-    setUpload({ ...upload, open: false })
-}
-
-//#region //Upload Photo
-const uploadFileToFirebase = (files) => {
-    console.log("upload")
-    setUpload({
-        open: false,
-    })
-    try {
-        Resizer.imageFileResizer(
-            files[0],
-            300, //maxWidth
-            300, //maxHeight
-            "JPEG", //compress type format [JPEG, PNG, WEBP]
-            100, //compress quality
-            0, //rotation
-            (uri) => {
-
-                //response uri
-
-                var uploadTask = firebase.storage().ref(`user_profile/${values.userUid}`)
-                    .put(uri);
-
-                uploadTask.on('state_changed',
-                    (snapshot) => {
-                        // Observe state change events such as progress, pause, and resume
-                        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                        console.log('Upload is ' + progress + '% done');
-                    },
-                    (error) => {
-                        // Handle unsuccessful uploads
-                    },
-                    () => {
-                        // Handle successful uploads on complete
-                        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-                        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-
-                            const db = firebase.firestore();
-                            db.collection("users").doc(values.userUid).set({
-                                photourl: downloadURL
-                            },
-                                { merge: true }
-                            );
-
-                            setValues({
-                                ...values,
-                                user: { ...values.user, photo_url: downloadURL },
-                                error: "",
-                            });
-
-                        });
-                    }
-                );
-            },
-            "file", //ouput type [base64, file, blob]
-            200, //minWidth
-            200 //minHeight
-        );
-    } catch (err) {
-        console.log(err);
-    }
-}
-
-//#endregion
-const coverOpenDropzone = () => {
-    setCover({ ...cover, open: true })
-}
-
-const coverCloseDropzone = () => {
-    setCover({ ...cover, open: false })
-}
-//#region //Upload Photo
-const uploadCover = (files) => {
-    console.log("upload")
-    setCover({
-        open: false,
-    })
-    try {
-        Resizer.imageFileResizer(
-            files[0],
-            300, //maxWidth
-            300, //maxHeight
-            "JPEG", //compress type format [JPEG, PNG, WEBP]
-            100, //compress quality
-            0, //rotation
-            (uri) => {
-
-                //response uri
-
-                var uploadTask = firebase.storage().ref(`user_Cover/${values.userUid}`)
-                    .put(uri);
-
-                uploadTask.on('state_changed',
-                    (snapshot) => {
-                        // Observe state change events such as progress, pause, and resume
-                        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                        console.log('Upload is ' + progress + '% done');
-                    },
-                    (error) => {
-                        // Handle unsuccessful uploads
-                    },
-                    () => {
-                        // Handle successful uploads on complete
-                        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-                        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-
-                            const db = firebase.firestore();
-                            db.collection("users").doc(values.userUid).set({
-                                coverurl: downloadURL
-                            },
-                                { merge: true }
-                            );
-
-                            setValues({
-                                ...values,
-                                user: { ...values.user, cover_url: downloadURL },
-                                error: "",
-                            });
-
-                        });
-                    }
-                );
-            },
-            "file", //ouput type [base64, file, blob]
-            200, //minWidth
-            200 //minHeight
-        );
-    } catch (err) {
-        console.log(err);
-    }
-}
-
-//#endregion
-
-return (
-    <div className={classes.root}>
-        <Header userProfile={values.user} />
-        {isMatch ?
-            <MobileViewHeader />
-            : ""
+    const handleUpload = (event) => {
+        event.preventDefault()
+        const id = uuidV4();
+        if (!caption && image === '') {
+            alert("please fill up the following fields")
+            setValues({ ...values, isLoading: false });
         }
-        <SideBarDrawer userProfile={values.user} profile={true}>
-            <Grid container justifyContent='center' className={classes.profileBorder}>
-                <Grid container className={classes.coverPhotoStyle} >
-                    {values.user === "" ? "" :
-                        <img src={values.user && values.user.coverurl} className={classes.coverStyle} alt="" />
-                    }
-                </Grid>
-                <Grid container justifyContent="center" style={{ marginTop: -70 }}>
-                    <Grid container justifyContent="flex-end" className={classes.coverBtn}>
-                        {isMatch ?
+        else if (image === '') {
+            setValues({ ...values, isLoading: true });
+            db.collection("posts").add({
+                owner: values.userUid,
+                photourl: values.user.photourl,
+                timestamp: new Date(),
+                caption: caption,
+                imageUrl: image,
+                noLikes: "",
+                firstname: values.user.firstname,
+                lastname: values.user.lastname
+            })
+            setValues({ ...values, isLoading: false });
+            setCaption("");
 
-                            <IconButton className={classes.coverIconBtn} onClick={coverOpenDropzone}>
-                                <MonochromePhotosIcon color="primary" />
+        } else {
+            const uploadTask = storage.ref(`images/${id}`).put(image);
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    const progress = Math.round(
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+
+                    );
+                    setValues({ ...values, progress: progress });
+                },
+                (error) => {
+                    console.log(error);
+                    alert(error.message);
+                },
+                () => {
+                    setValues({ ...values, isLoading: true });
+                    storage
+                        .ref("images")
+                        .child(id)
+                        .getDownloadURL()
+                        .then(url => {
+                            db.collection("posts").add({
+                                owner: values.userUid,
+                                photourl: values.user.photourl,
+                                timestamp: new Date(),
+                                caption: caption,
+                                imageUrl: url,
+                                noLikes: "",
+                                firstname: values.user.firstname,
+                                lastname: values.user.lastname
+                            })
+                            setValues({ ...values, progress: 0, isLoading: false })
+                            setCaption("");
+                            setImage('');
+                        })
+                }
+            )
+        }
+    }
+
+    //#endregion
+
+    const handleChange = (e) => {
+        if (e.target.files[0]) {
+            setImage(e.target.files[0])
+        }
+    }
+    const handleOpenDropzone = () => {
+        setUpload({ ...upload, open: true })
+    }
+
+    const handleCloseDropzone = () => {
+        setUpload({ ...upload, open: false })
+    }
+
+    //#region //Upload Photo
+    const uploadFileToFirebase = (files) => {
+        console.log("upload")
+        setUpload({
+            open: false,
+        })
+        try {
+            Resizer.imageFileResizer(
+                files[0],
+                300, //maxWidth
+                300, //maxHeight
+                "JPEG", //compress type format [JPEG, PNG, WEBP]
+                100, //compress quality
+                0, //rotation
+                (uri) => {
+
+                    //response uri
+
+                    var uploadTask = firebase.storage().ref(`user_profile/${values.userUid}`)
+                        .put(uri);
+
+                    uploadTask.on('state_changed',
+                        (snapshot) => {
+                            // Observe state change events such as progress, pause, and resume
+                            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            console.log('Upload is ' + progress + '% done');
+                        },
+                        (error) => {
+                            // Handle unsuccessful uploads
+                        },
+                        () => {
+                            // Handle successful uploads on complete
+                            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+
+                                const db = firebase.firestore();
+                                db.collection("users").doc(values.userUid).set({
+                                    photourl: downloadURL
+                                },
+                                    { merge: true }
+                                );
+
+                                setValues({
+                                    ...values,
+                                    user: { ...values.user, photo_url: downloadURL },
+                                    error: "",
+                                });
+
+                            });
+                        }
+                    );
+                },
+                "file", //ouput type [base64, file, blob]
+                200, //minWidth
+                200 //minHeight
+            );
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    //#endregion
+    const coverOpenDropzone = () => {
+        setCover({ ...cover, open: true })
+    }
+
+    const coverCloseDropzone = () => {
+        setCover({ ...cover, open: false })
+    }
+    //#region //Upload Photo
+    const uploadCover = (files) => {
+        console.log("upload")
+        setCover({
+            open: false,
+        })
+        try {
+            Resizer.imageFileResizer(
+                files[0],
+                300, //maxWidth
+                300, //maxHeight
+                "JPEG", //compress type format [JPEG, PNG, WEBP]
+                100, //compress quality
+                0, //rotation
+                (uri) => {
+
+                    //response uri
+
+                    var uploadTask = firebase.storage().ref(`user_Cover/${values.userUid}`)
+                        .put(uri);
+
+                    uploadTask.on('state_changed',
+                        (snapshot) => {
+                            // Observe state change events such as progress, pause, and resume
+                            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            console.log('Upload is ' + progress + '% done');
+                        },
+                        (error) => {
+                            // Handle unsuccessful uploads
+                        },
+                        () => {
+                            // Handle successful uploads on complete
+                            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+
+                                const db = firebase.firestore();
+                                db.collection("users").doc(values.userUid).set({
+                                    coverurl: downloadURL
+                                },
+                                    { merge: true }
+                                );
+
+                                setValues({
+                                    ...values,
+                                    user: { ...values.user, cover_url: downloadURL },
+                                    error: "",
+                                });
+
+                            });
+                        }
+                    );
+                },
+                "file", //ouput type [base64, file, blob]
+                200, //minWidth
+                200 //minHeight
+            );
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    //#endregion
+
+    return (
+        <div className={classes.root}>
+            <Header userProfile={values.user} />
+            {isMatch ?
+                <MobileViewHeader />
+                : ""
+            }
+            <SideBarDrawer userProfile={values.user} profile={true}>
+                <Grid container justifyContent='center' className={classes.profileBorder}>
+                    <Grid container className={classes.coverPhotoStyle} >
+                        {values.user === "" ? "" :
+                            <img src={values.user && values.user.coverurl} className={classes.coverStyle} alt="" />
+                        }
+                    </Grid>
+                    <Grid container justifyContent="center" style={{ marginTop: -70 }}>
+                        <Grid container justifyContent="flex-end" className={classes.coverBtn}>
+                            {isMatch ?
+
+                                <IconButton className={classes.coverIconBtn} onClick={coverOpenDropzone}>
+                                    <MonochromePhotosIcon color="primary" />
+                                </IconButton>
+                                :
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={coverOpenDropzone}
+                                >
+                                    Select Cover Photo
+                                </Button>
+
+                            }
+
+                            <DropzoneDialog
+                                open={cover.open}
+                                onSave={uploadCover}
+                                acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
+                                showPreviews={true}
+                                maxFileSize={25000000}
+                                filesLimit={1}
+                                onClose={coverCloseDropzone}
+                            />
+                        </Grid>
+
+                        <Grid container justifyContent="center" >
+                            <Avatar src={values.user && values.user.photourl} style={{ width: 100, height: 100, marginLeft: 50, marginTop: 10 }} />
+                            <IconButton className={classes.cameraStyle} onClick={handleOpenDropzone}>
+                                <CameraIcon />
                             </IconButton>
-                            :
+                            <DropzoneDialog
+                                open={upload.open}
+                                onSave={uploadFileToFirebase}
+                                acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
+                                showPreviews={true}
+                                maxFileSize={25000000}
+                                filesLimit={1}
+                                onClose={handleCloseDropzone}
+                            />
+                        </Grid>
+                        <Grid container justifyContent="center">
+                            <Typography variant="h6">{values.user && values.user.firstname} {values.user && values.user.lastname}</Typography>
+                        </Grid>
+                        <Grid container justifyContent="center">
+                            <Typography>{values.user && values.user.email}</Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid container className={classes.postContainer} >
+                    <Grid item sm={10}>
+                        <Grid container justifyContent="flex-start">
+                            <TextField
+                                fullWidth
+                                variant="outlined"
+                                value={caption}
+                                onChange={(e) => setCaption(e.target.value)}
+                                placeholder={`What's on your mind ${values.user && values.user.firstname} ?`}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <Avatar src={values.user && values.user.photourl} color="primary" />
+                                        </InputAdornment>
+                                    ),
+                                    className: classes.textSize
+                                }}
+                            />
+                        </Grid>
+                    </Grid>
+                    <Grid item sm={2}>
+                        <Grid container justifyContent="flex-end" >
                             <Button
                                 variant="contained"
                                 color="primary"
-                                onClick={coverOpenDropzone}
+                                className={classes.btnStyle}
+                                onClick={handleUpload}
+                                fullWidth
                             >
-                                Select Cover Photo
+                                Post it
                             </Button>
+                        </Grid>
 
-                        }
-
-                        <DropzoneDialog
-                            open={cover.open}
-                            onSave={uploadCover}
-                            acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
-                            showPreviews={true}
-                            maxFileSize={25000000}
-                            filesLimit={1}
-                            onClose={coverCloseDropzone}
-                        />
                     </Grid>
-
-                    <Grid container justifyContent="center" >
-                        <Avatar src={values.user && values.user.photourl} style={{ width: 100, height: 100, marginLeft: 50, marginTop: 10 }} />
-                        <IconButton className={classes.cameraStyle} onClick={handleOpenDropzone}>
-                            <CameraIcon />
-                        </IconButton>
-                        <DropzoneDialog
-                            open={upload.open}
-                            onSave={uploadFileToFirebase}
-                            acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
-                            showPreviews={true}
-                            maxFileSize={25000000}
-                            filesLimit={1}
-                            onClose={handleCloseDropzone}
-                        />
-                    </Grid>
-                    <Grid container justifyContent="center">
-                        <Typography variant="h6">{values.user && values.user.firstname} {values.user && values.user.lastname}</Typography>
-                    </Grid>
-                    <Grid container justifyContent="center">
-                        <Typography>{values.user && values.user.email}</Typography>
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Grid container className={classes.postContainer} >
-                <Grid item sm={10}>
-                    <Grid container justifyContent="flex-start">
-                        <TextField
-                            fullWidth
-                            variant="outlined"
-                            value={caption}
-                            onChange={(e) => setCaption(e.target.value)}
-                            placeholder={`What's on your mind ${values.user && values.user.firstname} ?`}
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <Avatar src={values.user && values.user.photourl} color="primary" />
-                                    </InputAdornment>
-                                ),
-                                className: classes.textSize
-                            }}
-                        />
-                    </Grid>
-                </Grid>
-                <Grid item sm={2}>
-                    <Grid container justifyContent="flex-end" >
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            className={classes.btnStyle}
-                            onClick={handleUpload}
-                            fullWidth
+                    <Grid container>
+                        <Grid
+                            container
+                            style={{ marginTop: 20, width: "3%", cursor: "pointer" }}
+                            onClick={uploadFileWithClick}
                         >
-                            Post it
-                        </Button>
-                    </Grid>
-
-                </Grid>
-                <Grid container>
-                    <Grid
-                        container
-                        style={{ marginTop: 20, width: "3%", cursor: "pointer" }}
-                        onClick={uploadFileWithClick}
-                    >
-                        <PhotoSizeSelectActualIcon color="primary" className={classes.icon} />
-                        <input type="file" className="imageFile" onChange={handleChange} style={{ display: "none" }} />
-                    </Grid>
-                </Grid>
-                <Grid container>
-                    <Grid container spacing={2}>
-                        <Grid item>
-                            <CheckCircleIcon color="primary" />
-                        </Grid>
-                        <Grid item>
-                            <MenuBookIcon color="primary" />
-                        </Grid>
-                        <Grid item>
-                            <Typography>News Feed</Typography>
+                            <PhotoSizeSelectActualIcon color="primary" className={classes.icon} />
+                            <input type="file" className="imageFile" onChange={handleChange} style={{ display: "none" }} />
                         </Grid>
                     </Grid>
-                    <Grid container justifyContent="center">
-                        {image === "" ? "" :
-                            <Typography variant="subtitle1" className={`imageText ${image && 'show'}`}>Image is added and will be displayed after clicking the Post button</Typography>
-                        }
+                    <Grid container>
+                        <Grid container spacing={2}>
+                            <Grid item>
+                                <CheckCircleIcon color="primary" />
+                            </Grid>
+                            <Grid item>
+                                <MenuBookIcon color="primary" />
+                            </Grid>
+                            <Grid item>
+                                <Typography>News Feed</Typography>
+                            </Grid>
+                        </Grid>
+                        <Grid container justifyContent="center">
+                            {image === "" ? "" :
+                                <Typography variant="subtitle1" className={`imageText ${image && 'show'}`}>Image is added and will be displayed after clicking the Post button</Typography>
+                            }
+                        </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
-            {
-                posts.map(({ id, post }) => (
-                    <Post
-                        key={id}
-                        postId={id}
-                        userName={post.firstname}
-                        userId={values.user && values.user.userUid}
-                        userProfile={values.user}
-                        timestamp={post.timestamp}
-                        caption={post.caption}
-                        imageUrl={post.imageUrl}
-                        noLikes={post.noLikes}
-                        photourl={post.photourl}
-                    />
-                ))
-            }
-        </SideBarDrawer>
-    </div>
-)
+                {
+                    posts.map(({ id, post }) => (
+                        <Post
+                            key={id}
+                            postId={id}
+                            userName={post.firstname}
+                            userId={values.user && values.user.userUid}
+                            userProfile={values.user}
+                            timestamp={post.timestamp}
+                            caption={post.caption}
+                            imageUrl={post.imageUrl}
+                            noLikes={post.noLikes}
+                            photourl={post.photourl}
+                        />
+                    ))
+                }
+            </SideBarDrawer>
+        </div>
+    )
 }

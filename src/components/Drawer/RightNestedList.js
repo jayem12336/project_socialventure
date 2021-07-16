@@ -71,7 +71,7 @@ export default function RightNestedList() {
             <Avatar style={{ width: 50, height: 50, marginTop: 10 }} />
           </Grid>
           <Grid item>
-            <Typography variant="h6" style={{ marginTop: 10, fontWeight:"bold" }}>Jomari Aquino</Typography>
+            <Typography variant="h6" style={{ marginTop: 10, fontWeight: "bold" }}>Jomari Aquino</Typography>
             <Typography variant="subtitle1">Wants to add you to friends</Typography>
           </Grid>
           <Grid container justifyContent="center" spacing={3}>
@@ -102,7 +102,7 @@ export default function RightNestedList() {
             <Avatar style={{ width: 50, height: 50, marginTop: 10 }} />
           </Grid>
           <Grid item>
-            <Typography variant="h6" style={{ marginTop: 10, fontWeight:"bold" }}>Jarvis Mariano</Typography>
+            <Typography variant="h6" style={{ marginTop: 10, fontWeight: "bold" }}>Jarvis Mariano</Typography>
             <Typography variant="subtitle1">Wants to add you to friends</Typography>
           </Grid>
           <Grid container justifyContent="center" spacing={3}>

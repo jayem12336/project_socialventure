@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 export default function NestedListComponents({ userProfile }) {
 
     const classes = useStyles();
-    
+
     const history = useHistory();
 
     const [openDrawer, setOpenDrawer] = useState(false);
@@ -92,12 +92,12 @@ export default function NestedListComponents({ userProfile }) {
                         <Grid container>
                             <Grid item>
                                 <Grid container>
-                                    <Avatar src={userProfile && userProfile.photourl}/>
+                                    <Avatar src={userProfile && userProfile.photourl} />
                                 </Grid>
                             </Grid>
                             <Grid item>
                                 <Grid container>
-                                    <Typography variant="overline" style={{marginLeft:5}}>{userProfile && userProfile.firstname} {userProfile && userProfile.lastname}</Typography>
+                                    <Typography variant="overline" style={{ marginLeft: 5 }}>{userProfile && userProfile.firstname} {userProfile && userProfile.lastname}</Typography>
                                 </Grid>
                             </Grid>
                         </Grid>

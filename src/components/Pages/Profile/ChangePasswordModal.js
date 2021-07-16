@@ -62,13 +62,13 @@ export default function ChangePasswordModal({ setOpen }) {
     };
 
     const changePassword = () => {
-        if(values.password === "" || values.confirmPassword === ""){
+        if (values.password === "" || values.confirmPassword === "") {
             alert("Please fill up the following fields");
         }
-        else if(values.password !== values.confirmPassword){
+        else if (values.password !== values.confirmPassword) {
             alert("Password does not match!")
         }
-        else if(values.password.length < 6){
+        else if (values.password.length < 6) {
             alert("Please enter a password minimum of 6 characters")
         }
         else {
@@ -77,10 +77,10 @@ export default function ChangePasswordModal({ setOpen }) {
                 alert("Change Password Successfully");
                 setOpen(false);
             }).catch((error) => { console.log(error); });
-        }    
+        }
     }
 
-if (values.isLoading) {
+    if (values.isLoading) {
         return (
             <div style={{
                 display: 'flex',
@@ -128,7 +128,7 @@ if (values.isLoading) {
                                         onClick={handleClickShowPassword}
                                         onMouseDown={handleMouseDownPassword}
                                     >
-                                        {values.showPassword ? <Visibility color="primary"/> : <VisibilityOff color="primary"/>}
+                                        {values.showPassword ? <Visibility color="primary" /> : <VisibilityOff color="primary" />}
                                     </IconButton>
                                 </InputAdornment>
                             ),
@@ -163,7 +163,7 @@ if (values.isLoading) {
                                         onClick={handleClickShowPassword}
                                         onMouseDown={handleMouseDownPassword}
                                     >
-                                        {values.showPassword ? <Visibility color="primary"/> : <VisibilityOff color="primary"/>}
+                                        {values.showPassword ? <Visibility color="primary" /> : <VisibilityOff color="primary" />}
                                     </IconButton>
                                 </InputAdornment>
                             ),

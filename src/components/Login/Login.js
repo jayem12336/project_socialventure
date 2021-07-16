@@ -177,7 +177,7 @@ export default function Login() {
         e.preventDefault();
 
 
-            auth
+        auth
             .signInWithPopup(provider)
             .then((result) => {
 
@@ -188,21 +188,21 @@ export default function Login() {
                 // ...
 
                 const currentUser = auth.currentUser;
-                    db.collection("users").doc(currentUser.uid).set(
-                        {
-                            email: currentUser.email,
-                            firstname: firstName,
-                            lastname: lastName,
-                            photourl: currentUser.photoURL,
-                            userid: currentUser.uid,
-                            gender: "",
-                            birthday: values.selectedDate,
-                            signinwithgoogle: "true"
-                        }).then(() => {
-                            console.log("document successfully Written");
-                        })
-                    setValues({ isLoading: false });
-                    history.push('/home');
+                db.collection("users").doc(currentUser.uid).set(
+                    {
+                        email: currentUser.email,
+                        firstname: firstName,
+                        lastname: lastName,
+                        photourl: currentUser.photoURL,
+                        userid: currentUser.uid,
+                        gender: "",
+                        birthday: values.selectedDate,
+                        signinwithgoogle: "true"
+                    }).then(() => {
+                        console.log("document successfully Written");
+                    })
+                setValues({ isLoading: false });
+                history.push('/home');
             }).catch((error) => {
 
             });

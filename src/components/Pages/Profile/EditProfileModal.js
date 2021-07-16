@@ -55,7 +55,7 @@ export default function ProfileModal({ userInfo, userId, setOpen }) {
         firstname: "",
         lastname: "",
         email: "",
-        gender:"",
+        gender: "",
         birthday: "",
         errors: "",
         isLoading: false,
@@ -182,27 +182,27 @@ export default function ProfileModal({ userInfo, userId, setOpen }) {
                         </RadioGroup>
                     </FormControl>
                 </Grid>
-                    <Grid container className={classes.margin}>
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <Grid container justifyContent="center">
-                                <KeyboardDatePicker
-                                    margin="normal"
-                                    id="date-picker-dialog"
-                                    label="Birthday"
-                                    format="MMM/dd/yyyy"
-                                    variant="dialog"
-                                    inputVariant="outlined"
-                                    size="small"
-                                    fullWidth
-                                    value={selectedDate}
-                                    onChange={handleDateChange}
-                                    KeyboardButtonProps={{
-                                        'aria-label': 'change date',
-                                    }}
-                                />
-                            </Grid>
-                        </MuiPickersUtilsProvider>
-                    </Grid>
+                <Grid container className={classes.margin}>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <Grid container justifyContent="center">
+                            <KeyboardDatePicker
+                                margin="normal"
+                                id="date-picker-dialog"
+                                label="Birthday"
+                                format="MMM/dd/yyyy"
+                                variant="dialog"
+                                inputVariant="outlined"
+                                size="small"
+                                fullWidth
+                                value={selectedDate}
+                                onChange={handleDateChange}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
+                            />
+                        </Grid>
+                    </MuiPickersUtilsProvider>
+                </Grid>
                 <Grid container className={classes.btnContainer}>
                     <Button
                         variant="contained"

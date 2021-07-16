@@ -237,7 +237,7 @@ export default function UserInfo() {
             icon: 'warning',
         })
     }
-    
+
 
     return (
         <div className={classes.root}>
