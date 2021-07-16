@@ -10,7 +10,7 @@ import { Typography } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             padding: 20,
             marginTop: -90
         },

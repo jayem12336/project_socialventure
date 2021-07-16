@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
         // margin: 'auto',
         height: '820px',
         display: 'flex',
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             height: '100%'
         },
     },
@@ -60,11 +60,11 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'white',
         padding: 30,
         borderRadius: 25,
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)'
+        boxShadow: theme.palette.colors.boxShadow,
     },
     containerPosition: {
         margin: '10px auto',
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             margin: '50px auto'
         },
     },

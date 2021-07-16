@@ -21,12 +21,13 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import Swal from 'sweetalert2'
 import firebase from '../../../utils/firebase'
+import { alpha } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
         maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: alpha(theme.palette.background.paper),
     },
     nested: {
         paddingLeft: theme.spacing(4),

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
@@ -16,6 +16,12 @@ import { db, auth } from '../../../utils/firebase'
 import { CircularProgress } from '@material-ui/core'
 
 import Logo from '../../../assets/images/SV1.png'
+
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -49,6 +55,8 @@ export default function ProfileModal({ userInfo, userId, setOpen }) {
         firstname: "",
         lastname: "",
         email: "",
+        gender:"",
+        birthday: "",
         errors: "",
         isLoading: false,
     })
@@ -56,11 +64,6 @@ export default function ProfileModal({ userInfo, userId, setOpen }) {
     const handleChange = (prop) => (e) => {
         setValues({ ...values, [prop]: e.target.value })
     }
-
-
-    useEffect(() => {
-
-    }, [userId])
 
     // The first commit of Material-UI
     const [selectedDate, setSelectedDate] = useState(userInfo.birthday.toDate().toISOString());
@@ -81,6 +84,12 @@ export default function ProfileModal({ userInfo, userId, setOpen }) {
             setValues({ ...values, isLoading: true });
             db.collection("users").doc(userId).update({
                 lastname: values.lastname
+            })
+        }
+        if (values.gender !== "") {
+            setValues({ ...values, isLoading: true });
+            db.collection("users").doc(userId).update({
+                gender: values.gender
             })
         }
         if (values.email !== "") {
@@ -158,9 +167,21 @@ export default function ProfileModal({ userInfo, userId, setOpen }) {
                         />
                     </Grid>
                 }
-
-                {userInfo && userInfo.signinwithgoogle === false ? "" :
-
+                <Grid container justifyContent="center">
+                    <FormControl component="fieldset">
+                        <FormLabel component="legend">Gender</FormLabel>
+                        <RadioGroup aria-label="gender" name="gender1" value={values.gender} onChange={handleChange('gender')}>
+                            <Grid container justifyContent="center" spacing={3}>
+                                <Grid item xs={6}>
+                                    <FormControlLabel value="male" control={<Radio />} label="Male" />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <FormControlLabel value="female" control={<Radio />} label="Female" />
+                                </Grid>
+                            </Grid>
+                        </RadioGroup>
+                    </FormControl>
+                </Grid>
                     <Grid container className={classes.margin}>
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <Grid container justifyContent="center">
@@ -182,7 +203,6 @@ export default function ProfileModal({ userInfo, userId, setOpen }) {
                             </Grid>
                         </MuiPickersUtilsProvider>
                     </Grid>
-                }
                 <Grid container className={classes.btnContainer}>
                     <Button
                         variant="contained"

@@ -1,19 +1,16 @@
 import React from 'react';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import Avatar from '@material-ui/core/Avatar';
 import SearchIcon from '@material-ui/icons/Search';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Grid from '@material-ui/core/Grid';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Logo from '../../assets/images/SV1.png';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles'
@@ -22,6 +19,7 @@ import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2'
 import firebase from '../../utils/firebase'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { alpha } from '@material-ui/core/styles'
 
 //#region //Styles
 const useStyles = makeStyles((theme) => ({
@@ -49,9 +47,9 @@ const useStyles = makeStyles((theme) => ({
     search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
+        backgroundColor: alpha(theme.palette.common.white, 0.15),
         '&:hover': {
-            backgroundColor: fade(theme.palette.common.white, 0.25),
+            backgroundColor: alpha(theme.palette.common.white, 0.25),
         },
         marginRight: theme.spacing(2),
         marginLeft: 0,
@@ -119,16 +117,6 @@ export default function Header({ userProfile }) {
 
     const classes = useStyles();
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
-
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
     const notificationButton = () => {
         Swal.fire({
             position: 'center',
@@ -146,7 +134,6 @@ export default function Header({ userProfile }) {
     }
 
     const logout = () => {
-        setAnchorEl(null);
         Swal.fire({
             title: 'Are you sure you want to Logout?',
             icon: 'warning',
@@ -247,20 +234,10 @@ export default function Header({ userProfile }) {
                                 aria-label="show 17 new notifications"
                                 color="inherit"
                                 className={classes.iconBtn}
-                                onClick={handleClick}
+                                onClick={logout}
                             >
-                                <ArrowDropDownIcon className={classes.iconStyle} />
+                                <ExitToAppIcon className={classes.iconStyle} />
                             </IconButton>
-                            <Menu
-                                id="simple-menu"
-                                anchorEl={anchorEl}
-                                keepMounted
-                                open={Boolean(anchorEl)}
-                                onClose={handleClose}
-                                style={{ marginTop: 58 }}
-                            >
-                                <MenuItem onClick={logout}><ExitToAppIcon />Logout</MenuItem>
-                            </Menu>
                         </div>
                         {isMatch ? <NestedListComponents userProfile={userProfile} /> : ""}
                     </Toolbar>

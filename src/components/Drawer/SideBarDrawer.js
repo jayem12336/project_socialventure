@@ -11,7 +11,7 @@ const drawerWidth = 250;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop:60
+    marginTop: 60
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
@@ -23,9 +23,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
     marginTop: -58,
-    "@media (max-width: 600px)": {
+    [theme.breakpoints.down('sm')]: {
       marginTop: 0,
-  },
+    },
   },
 }));
 
@@ -44,7 +44,7 @@ function SideBarDrawer({ children, userProfile, profile }) {
       {isMatch ? "" : (
         <>
           <nav className={classes.drawer} aria-label="Button folders">
-            <NestedList userProfile={userProfile}/>
+            <NestedList userProfile={userProfile} />
           </nav>
         </>
       )}
@@ -52,10 +52,10 @@ function SideBarDrawer({ children, userProfile, profile }) {
         <div className={classes.toolbar} />
         {children}
       </main>
-      {isMatch || profile || isMatchIpad? "" : (
+      {isMatch || profile || isMatchIpad ? "" : (
         <>
           <nav className={classes.drawer} aria-label="Button folders">
-            <RightNestedList userProfile={userProfile}/>
+            <RightNestedList userProfile={userProfile} />
           </nav>
         </>
       )}

@@ -19,7 +19,10 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import ProfileModal from './EditProfileModal';
 import moment from 'moment';
-
+import { alpha } from '@material-ui/core/styles';
+import ErrorIcon from '@material-ui/icons/Error';
+import ChangePasswordModal from './ChangePasswordModal';
+import Swal from 'sweetalert2'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,11 +32,11 @@ const useStyles = makeStyles((theme) => ({
         margin: '0px auto',
     },
     profileBorder: {
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        boxShadow: theme.palette.colors.boxShadow,
         padding: 10,
     },
     listStyle: {
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        boxShadow: theme.palette.colors.boxShadow,
         borderRadius: 5,
         maxWidth: 460,
         marginTop: 20,
@@ -44,33 +47,32 @@ const useStyles = makeStyles((theme) => ({
         top: 85,
         right: 40,
         height: 5,
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             top: 65,
             right: 30,
             height: 5,
-        }
-
+        },
     },
     emailtextStyle: {
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             fontSize: 15
-        }
+        },
     },
     avatarStyle: {
         width: 100,
         height: 100,
         marginTop: 10,
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             width: 50,
             height: 50,
             marginTop: 35,
             marginLeft: 50
-        }
+        },
     },
     textStyle: {
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             fontSize: 15
-        }
+        },
     },
     btnStyle: {
         width: 220,
@@ -80,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             background: '#4877c2',
         },
-        "@media (max-width: 600px)": {
+        [theme.breakpoints.down('sm')]: {
             width: 120,
             fontSize: 12,
         },
@@ -91,15 +93,14 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
     },
     paper: {
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: alpha(theme.palette.background.paper),
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
-
 }))
 
-export default function UserInfo({ userProfile }) {
+export default function UserInfo() {
 
     const classes = useStyles();
 
@@ -117,14 +118,24 @@ export default function UserInfo({ userProfile }) {
         open: false
     })
 
-    const [open, setOpen] = React.useState(false);
+    const [openEditProfileModal, setOpenEditProfileModal] = React.useState(false);
 
-    const handleOpen = () => {
-        setOpen(true);
+    const handleOpenEditProfile = () => {
+        setOpenEditProfileModal(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleCloseEditProfile = () => {
+        setOpenEditProfileModal(false);
+    };
+
+    const [openChangePasswordModal, setOpenChangePasswordModal] = React.useState(false);
+
+    const handleOpenChangePassword = () => {
+        setOpenChangePasswordModal(true);
+    };
+
+    const handleCloseChangePassword = () => {
+        setOpenChangePasswordModal(false);
     };
 
     useEffect(() => {
@@ -220,6 +231,13 @@ export default function UserInfo({ userProfile }) {
 
     //#endregion
 
+    const importantNotice = () => {
+        Swal.fire({
+            title: 'Gender and Birthday cannot be retrieve using google sign in',
+            icon: 'warning',
+        })
+    }
+    
 
     return (
         <div className={classes.root}>
@@ -230,6 +248,17 @@ export default function UserInfo({ userProfile }) {
             }
             <SideBarDrawer userProfile={values.user} profile={true}>
                 <Grid container justifyContent='center' className={classes.profileBorder}>
+                    {values.user && values.user.signinwithgoogle === "true" ?
+                        <Grid container justifyContent="flex-end">
+                            <Typography>
+                                Important Notice
+                                <IconButton onClick={importantNotice}>
+                                    <ErrorIcon color="primary" />
+                                </IconButton>
+                            </Typography>
+                        </Grid>
+                        : ""
+                    }
                     <Grid container justifyContent="center">
                         <Grid container justifyContent="center" >
                             <Avatar src={values.user && values.user.photourl} className={classes.avatarStyle} />
@@ -281,28 +310,63 @@ export default function UserInfo({ userProfile }) {
                                 variant="contained"
                                 color="primary"
                                 className={classes.btnStyle}
-                                onClick={handleOpen}
+                                onClick={handleOpenEditProfile}
                             >
                                 Edit Profile
                             </Button>
+                            {values.user && values.user.signinwithgoogle === "true"
+                                ? ""
+                                :
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.btnStyle}
+                                    onClick={handleOpenChangePassword}
+                                    style={{ marginLeft: 10 }}
+                                >
+                                    Change Password
+                                </Button>
+                            }
                         </Grid>
                     </Grid>
                     <Modal
                         className={classes.modal}
-                        open={open}
-                        onClose={handleClose}
+                        open={openEditProfileModal}
+                        onClose={handleCloseEditProfile}
                         closeAfterTransition
                         BackdropComponent={Backdrop}
                         BackdropProps={{
                             timeout: 500,
                         }}
                     >
-                        <Fade in={open}>
-                            <ProfileModal
-                                userInfo={values.user}
-                                userId={values.userUid}
-                                setOpen={setOpen}
-                            />
+                        <Fade in={openEditProfileModal}>
+                            <>
+                                <ProfileModal
+                                    userInfo={values.user}
+                                    userId={values.userUid}
+                                    setOpen={setOpenEditProfileModal}
+                                />
+                            </>
+                        </Fade>
+                    </Modal>
+                    <Modal
+                        className={classes.modal}
+                        open={openChangePasswordModal}
+                        onClose={handleCloseChangePassword}
+                        closeAfterTransition
+                        BackdropComponent={Backdrop}
+                        BackdropProps={{
+                            timeout: 500,
+                        }}
+                    >
+                        <Fade in={openChangePasswordModal}>
+                            <>
+                                <ChangePasswordModal
+                                    userInfo={values.user}
+                                    userId={values.userUid}
+                                    setOpen={setOpenChangePasswordModal}
+                                />
+                            </>
                         </Fade>
                     </Modal>
                 </Grid>

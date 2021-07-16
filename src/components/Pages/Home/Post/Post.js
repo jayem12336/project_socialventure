@@ -7,7 +7,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Button from '@material-ui/core/Button'
 import { useTheme } from '@material-ui/core/styles'
-import { db } from '../../../../utils/firebase'
+import { db, storage } from '../../../../utils/firebase'
 import moment from 'moment'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ChatIcon from '@material-ui/icons/Chat';
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     postContainer: {
         padding: 40,
         marginTop: 40,
-        boxShadow: "1px 1px 2px 2px #ccc",
+        boxShadow: theme.palette.colors.boxShadow,
     },
     btnStyle: {
         width: 150,
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: "row",
     },
     container_comments: {
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        boxShadow: theme.palette.colors.boxShadow,
         padding: 10,
         width: "100%",
         borderRadius: 10,
@@ -104,7 +104,8 @@ export default function Post({
     timestamp,
     userProfile,
     photourl,
-    owner
+    owner,
+    imageid
 }) {
 
     const classes = useStyles();
@@ -237,6 +238,17 @@ export default function Post({
 
     const deletePost = () => {
         if (owner === userId) {
+            if (imageUrl !== "") {
+                // Create a reference to the file to delete
+                const desertRef = storage.ref(`images/${imageid}`);
+
+                // Delete the file
+                desertRef.delete().then(() => {
+                    // File deleted successfully
+                }).catch((error) => {
+                    // Uh-oh, an error occurred!
+                });
+            }
             db.collection('posts').doc(postId).delete();
         }
         else {

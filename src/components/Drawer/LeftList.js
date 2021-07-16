@@ -13,12 +13,13 @@ import Typography from '@material-ui/core/Typography';
 import PhotoSizeSelectActualIcon from '@material-ui/icons/PhotoSizeSelectActual';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import PersonIcon from '@material-ui/icons/Person';
+import { alpha } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: alpha(theme.palette.background.paper),
   },
   nested: {
     paddingLeft: theme.spacing(4),
@@ -27,20 +28,20 @@ const useStyles = makeStyles((theme) => ({
     border: 50
   },
   userDetailsContainer: {
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    boxShadow: theme.palette.colors.boxShadow,
     width: 300,
     paddingBottom: 10,
     borderRadius: 10
   },
   listStyle: {
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    boxShadow: theme.palette.colors.boxShadow,
     width: 300,
     marginLeft: 10,
     borderBottom: 'none',
     borderRadius: 5
   },
   lastListStyle: {
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    boxShadow: theme.palette.colors.boxShadow,
     width: 300,
     marginLeft: 10,
     borderRadius: 5

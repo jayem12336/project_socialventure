@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
-import firebase, { db, provider, auth } from '../../utils/firebase'
+import firebase, { db, provider } from '../../utils/firebase'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -24,6 +24,7 @@ import Fade from '@material-ui/core/Fade';
 import ForgotPassword from './ForgotPassword/ForgotPassword';
 import Footer from './../Footer/Footer'
 import bgImage from '../../assets/images/bgImage_2.png'
+import { alpha } from '@material-ui/core/styles'
 
 //#region //styles
 
@@ -59,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'white',
         padding: 40,
         borderRadius: 25,
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        boxShadow: theme.palette.colors.boxShadow,
         width: 400,
 
     },
@@ -92,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 200,
     },
     paper: {
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: alpha(theme.palette.background.paper),
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
@@ -175,28 +176,38 @@ export default function Login() {
 
         e.preventDefault();
 
-        auth.signInWithPopup(provider)
-            .then((userCredentials) => {
-                const firstName = userCredentials.additionalUserInfo.profile.given_name;
-                const lastName = userCredentials.additionalUserInfo.profile.family_name;
 
+        firebase.auth()
+            .signInWithPopup(provider)
+            .then((result) => {
+
+                const firstName = result.additionalUserInfo.profile.given_name;
+                const lastName = result.additionalUserInfo.profile.family_name;
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                // The signed-in user info.
+                // ...
 
                 firebase.auth().onAuthStateChanged(function (user) {
-                    db.collection("users").doc(user.uid).set({
-                        email: user.email,
-                        firstname: firstName,
-                        lastname: lastName,
-                        photourl: user.photoURL,
-                        userid: user.uid,
-                        gender: "",
-                        birthday: values.selectedDate,
-                        signinwithgoole: true
-                    }).then(() => {
-                        console.log("document successfully Written");
-                    })
+                    if (user) {
+                        db.collection("users").doc(user.uid).set(
+                            {
+                                email: user.email,
+                                firstname: firstName,
+                                lastname: lastName,
+                                photourl: user.photoURL,
+                                userid: user.uid,
+                                gender: "",
+                                birthday: values.selectedDate,
+                                signinwithgoogle: "true"
+                            }).then(() => {
+                                console.log("document successfully Written");
+                            })
+                    }
                     setValues({ isLoading: false });
                     history.push('/home');
                 });
+            }).catch((error) => {
+
             });
     }
 
@@ -314,7 +325,7 @@ export default function Login() {
                                         fullWidth
                                         onClick={loginwithGoogle}
                                     >
-                                        Sign up with google
+                                        Sign in with google
                                     </Button>
                                 </form>
                             </Grid>
@@ -333,9 +344,11 @@ export default function Login() {
                         timeout: 500,
                     }}
                 >
-                    <Fade in={open}>
-                        <ForgotPassword />
-                    </Fade>
+                    <>
+                        <Fade in={open}>
+                            <ForgotPassword />
+                        </Fade>
+                    </>
                 </Modal>
 
             </Grid>

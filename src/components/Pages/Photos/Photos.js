@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         margin: '0px auto',
     },
     profileBorder: {
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        boxShadow: theme.palette.colors.boxShadow,
         padding: 20,
     },
     imageList: {

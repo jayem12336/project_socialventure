@@ -39,7 +39,6 @@ function App() {
         // No user is signed in.
         setValues({ isAuthenticated: false, isLoading: false });
       }
-      console.log("useEffect", user);
     });
     return () => {
       setValues({}); // This worked for me

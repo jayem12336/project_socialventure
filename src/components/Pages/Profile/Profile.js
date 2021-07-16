@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
         margin: '0px auto'
     },
     profileBorder: {
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        boxShadow: theme.palette.colors.boxShadow,
         padding: 10
     },
     cameraStyle: {
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     postContainer: {
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        boxShadow: theme.palette.colors.boxShadow,
         padding: 25,
         marginBottom: 50,
         marginTop: 20
@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
     coverStyle: {
         height: 400,
         width: '100%',
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        boxShadow: theme.palette.colors.boxShadow,
         [theme.breakpoints.down('sm')]: {
             height: 200,
         },
@@ -89,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export default function Profile({ userProfile }) {
+export default function Profile() {
 
     const classes = useStyles();
 

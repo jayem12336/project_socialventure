@@ -18,7 +18,7 @@ import { InputAdornment } from '@material-ui/core';
 import MobileViewHeader from '../../Header/MobileViewHeader/MobileViewHeader'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles'
-
+import { alpha } from '@material-ui/core/styles'
 
 import Swal from 'sweetalert2'
 
@@ -30,12 +30,12 @@ const useStyles = makeStyles((theme) => ({
         margin: '0px auto',
     },
     gridContainer: {
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        boxShadow: theme.palette.colors.boxShadow,
         marginBottom: 50,
 
     },
     postContainer: {
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        boxShadow: theme.palette.colors.boxShadow,
         padding: 25,
         marginBottom: 50,
 
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
     },
     paper: {
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: alpha(theme.palette.background.paper),
         border: '2pxZ solid #000',
         boxShadow: theme.shadows[5],
         padding: theme.spacing(1, 1, 1),
@@ -86,6 +86,8 @@ export default function Home({ userProfile }) {
         user:{},
         useruid:""
     });
+
+    
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(function (user) {
@@ -145,7 +147,8 @@ export default function Home({ userProfile }) {
                 imageUrl: image,
                 noLikes: "",
                 firstname: values.user.firstname,
-                lastname: values.user.lastname
+                lastname: values.user.lastname,
+                imageid:""
             })
             setValues({ ...values, isLoading: false });
             setCaption("");
@@ -180,7 +183,8 @@ export default function Home({ userProfile }) {
                                 imageUrl: url,
                                 noLikes: "",
                                 firstname: values.user.firstname,
-                                lastname: values.user.lastname
+                                lastname: values.user.lastname,
+                                imageid:id
                             })
                             setValues({ ...values, progress: 0, isLoading: false })
                             setCaption("");
@@ -305,6 +309,7 @@ export default function Home({ userProfile }) {
                             noLikes={post.noLikes}
                             photourl={post.photourl}
                             owner={post.owner}
+                            imageid={post.imageid}
                         />
                     ))
                 }
